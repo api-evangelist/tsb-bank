@@ -1,0 +1,103 @@
+aid: tsb-bank
+name: TSB Bank
+review:
+  question: >-
+    Does TSB Bank publish a public developer portal and a live, confirmable Open
+    Banking API surface, and what is the auth model and spec provenance?
+  answer: partial
+  date: '2026-07-23'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    TSB Bank plc runs a genuine public developer portal at
+    https://apis.developer.tsb.co.uk/ (HTTP 200, single-page app with an "API
+    Products" section) and its API gateway host apis.tsb.co.uk resolves in DNS
+    and answers over HTTPS. As an FCA-authorised ASPSP under PSD2, TSB
+    implements the OBIE (Open Banking Implementation Entity) API family: an
+    unauthenticated Open Data reference API and the FAPI-secured Read/Write
+    APIs - Account and Transaction Information (AIS), Payment Initiation (PIS),
+    and Confirmation of Funds (CBPII). TSB is NOT one of the nine CMA-mandated
+    banks (CMA9); it participates in Open Banking voluntarily/regulatorily as a
+    non-CMA9 ASPSP.
+
+    No live Open Data endpoint (HTTP 200 + JSON) could be confirmed at review
+    time: probes of the standard OBIE path shapes against apis.tsb.co.uk and
+    apis.developer.tsb.co.uk (/open-banking/v2.3/atms, /apis/open-banking/...,
+    /open-data/..., and v2.2/v2.4/v3.0/v3.1 variants) all returned HTTP 404, and
+    .well-known/open-banking returned 404. The exact Open Data base path was not
+    published in any source crawled and appears gated or hosted under a path not
+    discoverable without portal onboarding.
+
+    The Read/Write APIs are documented (authenticated) surfaces: access requires
+    developer-portal registration plus OBIE/eIDAS certificates, FAPI-grade
+    OAuth2/OIDC, mutual-TLS client authentication, and PSD2 strong customer
+    authentication (SCA). No credentials were created and none are represented.
+  specProvenance: |
+    The only OpenAPI harvested is the SHARED OBIE Open Data API standard
+    (openapi/obie-open-data-openapi.json, Swagger 2.0, info.title "Open Data
+    API", version v1.3, 6 paths: /branches, /atms, /personal-current-accounts,
+    /business-current-accounts, /unsecured-sme-loans, /commercial-credit-cards),
+    downloaded verbatim (HTTP 200) from OpenBankingUK/opendata-api-spec-compiled.
+    This is the OBIE community standard that TSB conforms to - it is NOT a
+    TSB-proprietary contract and must not be read as a TSB-published spec. No
+    TSB-proprietary OpenAPI/Swagger was publicly downloadable. The Read/Write
+    APIs point at the OBIE Read/Write standard specs
+    (github.com/OpenBankingUK/read-write-api-specs) as their APIReference.
+  authModel:
+    standard: OBIE UK Open Banking (PSD2)
+    readWrite: FAPI OAuth2/OIDC + mutual-TLS + PSD2 SCA, OBIE/eIDAS certificates
+    openData: unauthenticated (per OBIE Open Data standard), endpoint unconfirmed
+    cma9: false
+  transports:
+  - protocol: REST
+    scheme: https
+    baseURL: https://apis.tsb.co.uk
+    documented: true
+    note: >-
+      Real, DNS-resolvable TSB API gateway host that answers over HTTPS. Root
+      and guessed OBIE resource paths return HTTP 404; exact resource paths are
+      gated behind developer-portal onboarding and follow the OBIE path shape.
+  - protocol: REST
+    scheme: https
+    baseURL: https://apis.developer.tsb.co.uk
+    documented: true
+    note: Public developer portal (HTTP 200); SPA exposing an API Products catalogue.
+  probes:
+  - url: https://apis.developer.tsb.co.uk/
+    status: 200
+    note: Developer portal home, SPA with #/home#api-products route.
+  - url: https://apis.tsb.co.uk/
+    status: 404
+    note: API gateway host resolves and answers HTTPS; root path 404 (reachable, not down).
+  - url: https://apis.tsb.co.uk/apis/open-banking/v2.3/atms
+    status: 404
+  - url: https://apis.tsb.co.uk/open-banking/v2.3/atms
+    status: 404
+  - url: https://apis.developer.tsb.co.uk/.well-known/open-banking
+    status: 404
+  - url: https://www.tsb.co.uk/help-and-support/open-banking/
+    status: 200
+    note: TSB's customer-facing Open Banking information page.
+  - url: https://www.tsb.co.uk/
+    status: 200
+  - url: https://www.linkedin.com/company/tsb-bank
+    status: 200
+sources:
+- url: https://apis.developer.tsb.co.uk/
+  type: DeveloperPortal
+  note: Confirmed public developer portal (HTTP 200).
+- url: https://www.tsb.co.uk/help-and-support/open-banking/
+  type: Documentation
+  note: TSB customer Open Banking page (HTTP 200).
+- url: https://www.openbanking.org.uk/regulated-providers/tsb-bank/
+  type: Registration
+  note: OBIE regulated-provider entry - TSB Bank plc, Edinburgh; links to FCA register.
+- url: https://raw.githubusercontent.com/OpenBankingUK/opendata-api-spec-compiled/master/opendata-swagger.json
+  type: OpenAPI
+  note: Shared OBIE Open Data standard Swagger 2.0 v1.3, harvested verbatim (HTTP 200).
+- url: https://github.com/OpenBankingUK/read-write-api-specs
+  type: APIReference
+  note: OBIE Read/Write standard specs (AIS/PIS/CBPII) TSB conforms to.
+- url: https://www.openbankingtracker.com/provider/tsb
+  type: Reference
+  note: Third-party tracker confirming TSB AIS/PIS/CBPII support and Banco Sabadell ownership.

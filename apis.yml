@@ -1,0 +1,136 @@
+aid: tsb-bank
+url: https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/apis.yml
+name: TSB Bank
+kind: company
+description: >-
+  TSB Bank plc is a British retail and commercial bank headquartered in
+  Edinburgh, offering current accounts, savings, mortgages, personal loans,
+  credit cards, and insurance to personal and business customers across the
+  United Kingdom. Spun out of Lloyds Banking Group in 2013 and listed before
+  being acquired in 2015, TSB is a wholly owned subsidiary of the Spanish
+  banking group Banco Sabadell. It is authorised by the Prudential Regulation
+  Authority and regulated by the Financial Conduct Authority and the PRA. As an
+  FCA-authorised account servicing payment service provider (ASPSP) under PSD2,
+  TSB participates in UK Open Banking and publishes its APIs conformant to the
+  Open Banking Implementation Entity (OBIE) standards through a public developer
+  portal at apis.developer.tsb.co.uk. TSB is not one of the nine CMA-mandated
+  banks (CMA9) but implements the same OBIE Open Data and Read/Write API family:
+  unauthenticated Open Data reference APIs plus FAPI-secured Account and
+  Transaction Information (AIS), Payment Initiation (PIS), and Confirmation of
+  Funds (CBPII) services secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong
+  customer authentication.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Financial Services
+- Banking
+- Open Banking
+- PSD2
+- OBIE
+- United Kingdom
+- Payments
+- Account Information
+- FAPI
+- Fintech
+created: '2026-07-23'
+modified: '2026-07-23'
+specificationVersion: '0.19'
+apis:
+- aid: tsb-bank:tsb-open-data-api
+  name: TSB Open Data API
+  description: >-
+    TSB's public, unauthenticated Open Data API conformant to the OBIE Open Data
+    API Standard, exposing reference data for ATMs, branches, personal current
+    accounts, business current accounts, unsecured SME loans, and commercial
+    credit cards. No live TSB Open Data endpoint was confirmed at review time;
+    the harvested OpenAPI is the shared OBIE Open Data standard, not a TSB
+    proprietary contract.
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Open Data
+  - ATMs
+  - Branches
+  - Reference Data
+  properties:
+  - type: OpenAPI
+    url: openapi/obie-open-data-openapi.json
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+- aid: tsb-bank:tsb-account-transaction-information-api
+  name: TSB Account and Transaction Information API (AIS)
+  description: >-
+    TSB's OBIE Read/Write Account and Transaction Information (AIS) API,
+    providing authorised third-party providers read access to account, balance,
+    transaction, beneficiary, standing order, direct debit, and statement data.
+    FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer
+    authentication; access requires developer-portal onboarding with OBIE/eIDAS
+    certificates.
+  humanURL: https://apis.developer.tsb.co.uk/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Account Information
+  - AIS
+  - Open Banking
+  properties:
+  - type: Documentation
+    url: https://apis.developer.tsb.co.uk/
+  - type: APIReference
+    url: https://github.com/OpenBankingUK/read-write-api-specs
+- aid: tsb-bank:tsb-payment-initiation-api
+  name: TSB Payment Initiation API (PIS)
+  description: >-
+    TSB's OBIE Read/Write Payment Initiation (PIS) API, enabling authorised
+    third-party providers to initiate domestic and scheduled payments and
+    standing orders on behalf of consenting customers. FAPI-secured with
+    OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication; access
+    requires developer-portal onboarding with OBIE/eIDAS certificates.
+  humanURL: https://apis.developer.tsb.co.uk/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Payment Initiation
+  - PIS
+  - Payments
+  properties:
+  - type: Documentation
+    url: https://apis.developer.tsb.co.uk/
+  - type: APIReference
+    url: https://github.com/OpenBankingUK/read-write-api-specs
+- aid: tsb-bank:tsb-confirmation-of-funds-api
+  name: TSB Confirmation of Funds API (CBPII)
+  description: >-
+    TSB's OBIE Read/Write Confirmation of Funds (CBPII) API, allowing authorised
+    card-based payment instrument issuers to confirm whether funds are available
+    on a customer account. FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2
+    strong customer authentication; access requires developer-portal onboarding
+    with OBIE/eIDAS certificates.
+  humanURL: https://apis.developer.tsb.co.uk/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Confirmation of Funds
+  - CBPII
+  - Open Banking
+  properties:
+  - type: Documentation
+    url: https://apis.developer.tsb.co.uk/
+  - type: APIReference
+    url: https://github.com/OpenBankingUK/read-write-api-specs
+common:
+- type: Website
+  url: https://www.tsb.co.uk/
+- type: DeveloperPortal
+  url: https://apis.developer.tsb.co.uk/
+- type: Documentation
+  url: https://www.tsb.co.uk/help-and-support/open-banking/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tsb-bank
+- type: TermsOfService
+  url: https://www.tsb.co.uk/legal/
+- type: PrivacyPolicy
+  url: https://www.tsb.co.uk/privacy/
+- type: Support
+  url: https://www.tsb.co.uk/help-and-support/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
