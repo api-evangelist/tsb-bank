@@ -1,0 +1,12 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for TSB OAuth Toolkit (OTK) Server
+  version: 1.0.0
+extends: openapi/tsb-bank-oauth-server-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: tsb-bank
+    x-apievangelist-standard: OpenID Connect / OAuth2 (Curity OAuth Toolkit)
+    x-apievangelist-discovery: https://apis.tsb.co.uk/.well-known/openid-configuration
+    x-apievangelist-fapi: true

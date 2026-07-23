@@ -1,0 +1,11 @@
+generated: '2026-07-23'
+method: generated
+skills:
+- file: tsb-bank-open-data-discovery.md
+  name: Discover TSB Open Data
+  api: openapi/obie-open-data-openapi.json
+  operations: ['GET /branches', 'GET /atms', 'GET /personal-current-accounts', 'GET /business-current-accounts', 'GET /unsecured-sme-loans', 'GET /commercial-credit-cards']
+- file: tsb-bank-oidc-client-onboarding.md
+  name: Inspect TSB identity and register an OIDC client
+  api: openapi/tsb-bank-oauth-server-openapi.json
+  operations: [Get_OpenIDDiscovery, Get_jwk_set_, Post_oidc_register, Get_oidc_register_config, Create_request_token]

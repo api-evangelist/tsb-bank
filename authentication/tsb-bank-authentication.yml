@@ -1,0 +1,48 @@
+generated: '2026-07-23'
+method: searched
+source: openapi/tsb-bank-oauth-server-openapi.json
+docs: https://apis.tsb.co.uk/.well-known/openid-configuration
+notes: >-
+  Enriched from TSB's live OpenID Provider discovery document. TSB runs a Curity
+  OAuth Toolkit (OTK) server as its OpenID Provider. The unauthenticated Open
+  Data API carries no security scheme (public reference data). The FAPI-secured
+  OBIE Read/Write services (AIS/PIS/CBPII) require OAuth2/OIDC with mutual-TLS
+  client authentication, request-object signing, and PSD2 strong customer
+  authentication, and are gated behind developer-portal onboarding with
+  OBIE/eIDAS certificates.
+summary:
+  types: [oauth2, openIdConnect, mutualTLS]
+  oauth2_flows: [implicit, authorizationCode, refreshToken]
+  token_endpoint_auth_methods:
+  - client_secret_basic
+  - client_secret_post
+  - client_secret_jwt
+  - private_key_jwt
+  strong_customer_authentication: true
+  fapi: true
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: implicit
+    authorizationUrl: https://apis.tsb.co.uk/auth/oauth/v2/authorize
+    scopes: 5
+  - flow: authorizationCode
+    authorizationUrl: https://apis.tsb.co.uk/auth/oauth/v2/authorize
+    tokenUrl: https://apis.tsb.co.uk/auth/oauth/v2/token
+  sources: [openapi/tsb-bank-oauth-server-openapi.json, well-known/tsb-bank-openid-configuration.json]
+- name: OpenIDConnect
+  type: openIdConnect
+  openIdConnectUrl: https://apis.tsb.co.uk/.well-known/openid-configuration
+  issuer: https://apis.tsb.co.uk:8443
+  userinfo_endpoint: https://apis.tsb.co.uk/openid/connect/v1/userinfo
+  jwks_uri: https://apis.tsb.co.uk/openid/connect/jwks.json
+  registration_endpoint: https://apis.tsb.co.uk/openid/connect/register
+  id_token_signing_alg_values_supported: [RS256, HS256]
+  sources: [well-known/tsb-bank-openid-configuration.json]
+- name: mutualTLS
+  type: mutualTLS
+  description: >-
+    OBIE FAPI security profile requires mutual-TLS (eIDAS QWAC/OBIE transport
+    certificate) between the TPP and TSB for the Read/Write services.
+  sources: [obie-security-profile]

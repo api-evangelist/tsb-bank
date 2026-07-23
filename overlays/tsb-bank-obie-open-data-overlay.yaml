@@ -1,0 +1,14 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for TSB OBIE Open Data API
+  version: 1.0.0
+extends: openapi/obie-open-data-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: tsb-bank
+    x-apievangelist-standard: OBIE Open Data API Standard
+    x-apievangelist-authentication: none (public reference data)
+    x-apievangelist-note: >-
+      Harvested contract is the shared OBIE Open Data standard; TSB serves
+      conformant Open Data via its developer portal.

@@ -1,0 +1,42 @@
+generated: '2026-07-23'
+method: derived
+status: candidate
+source: openapi/tsb-bank-oauth-server-openapi.json + openapi/obie-open-data-openapi.json
+notes: >-
+  No official hosted TSB MCP server was found. This is a DERIVED candidate tool
+  list mapping the publicly documented operations of TSB's Open Data API and
+  OAuth Toolkit server. The FAPI-secured OBIE Read/Write operations are omitted
+  because they require certificate-based onboarding and are not anonymously
+  invocable.
+server:
+  name: tsb-bank
+  transport: http
+  url: null
+tools:
+- name: list_branches
+  description: List TSB branches (Open Data reference data).
+  source_operation: openapi/obie-open-data-openapi.json#GET /branches
+- name: list_atms
+  description: List TSB ATMs.
+  source_operation: openapi/obie-open-data-openapi.json#GET /atms
+- name: list_personal_current_accounts
+  description: List personal current account products.
+  source_operation: openapi/obie-open-data-openapi.json#GET /personal-current-accounts
+- name: list_business_current_accounts
+  description: List business current account products.
+  source_operation: openapi/obie-open-data-openapi.json#GET /business-current-accounts
+- name: list_unsecured_sme_loans
+  description: List unsecured SME loan products.
+  source_operation: openapi/obie-open-data-openapi.json#GET /unsecured-sme-loans
+- name: list_commercial_credit_cards
+  description: List commercial credit card products.
+  source_operation: openapi/obie-open-data-openapi.json#GET /commercial-credit-cards
+- name: get_openid_configuration
+  description: Fetch the OpenID Provider discovery document.
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json#Get_OpenIDDiscovery
+- name: get_jwks
+  description: Fetch the JSON Web Key Set.
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json#Get_jwk_set_
+- name: register_client
+  description: Dynamically register an OIDC client (requires openid_client_registration).
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json#Post_oidc_register

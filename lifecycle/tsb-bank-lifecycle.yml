@@ -1,0 +1,23 @@
+generated: '2026-07-23'
+method: searched
+source: apis.developer.tsb.co.uk + OBIE standard versioning
+versioning:
+  scheme: uri-path
+  open_data_version: v2.4.0
+  read_write_version: v3.1
+  oauth_toolkit_version: 4.3.1
+  note: >-
+    TSB tracks the OBIE Open Data (v2.x) and Read/Write (v3.1) API standard
+    versions; the OAuth Toolkit (OTK) server reports version 4.3.1.
+deprecation:
+  policy_url: https://apis.developer.tsb.co.uk/
+  sunset_header: false
+  note: >-
+    Version lifecycle follows the OBIE standards roadmap; no dated TSB-specific
+    deprecation policy or RFC 8594 Sunset headers were confirmed at review time.
+sla:
+  note: >-
+    PSD2 ASPSP availability and performance reporting is published quarterly to
+    the FCA, not via a public developer SLA page.
+status_page: null
+deprecated_operations: []

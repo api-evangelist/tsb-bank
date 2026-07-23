@@ -1,0 +1,46 @@
+generated: '2026-07-23'
+method: derived
+format: plain
+source: openapi/tsb-bank-oauth-server-openapi.json + openapi/obie-open-data-openapi.json
+notes: >-
+  Derived from the 4xx/5xx responses declared in TSB's two live specs. Neither
+  spec uses application/problem+json (RFC 9457); the OAuth Toolkit returns
+  OAuth2/OIDC error objects and the OBIE Read/Write services use the OBIE error
+  envelope (Code, Id, Message, Errors[]).
+problems:
+- status: 400
+  title: Bad request
+  detail: Invalid parameters / invalid redirect_uri / invalid client type
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json#Get_request_authorization
+- status: 400
+  title: Request not understood
+  detail: You have sent a request which could not be understood.
+  source_operation: openapi/obie-open-data-openapi.json#GET /branches
+- status: 401
+  title: Unauthorized
+  detail: The client could not be authenticated.
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json#Create_request_token
+- status: 403
+  title: Forbidden
+  detail: Forbidden.
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json#Get_client_details_export_
+- status: 405
+  title: Method not allowed
+  detail: The HTTP method is not valid.
+  source_operation: openapi/tsb-bank-oauth-server-openapi.json
+- status: 408
+  title: Request timeout
+  detail: The server timed out waiting for the request.
+  source_operation: openapi/obie-open-data-openapi.json#GET /atms
+- status: 429
+  title: Too many requests
+  detail: You have requested this resource too often. Slow down.
+  source_operation: openapi/obie-open-data-openapi.json#GET /branches
+- status: 500
+  title: Internal server error
+  detail: An error occurred on the server. No further information is available.
+  source_operation: openapi/obie-open-data-openapi.json#GET /branches
+- status: 503
+  title: Service unavailable
+  detail: The service is temporarily unavailable.
+  source_operation: openapi/obie-open-data-openapi.json#GET /branches

@@ -1,0 +1,43 @@
+generated: '2026-07-23'
+method: searched
+source: OBIE Read/Write API standard + OTK OpenAPI + OpenID discovery
+notes: >-
+  Cross-cutting request/response semantics for TSB's Open Banking surface. The
+  unauthenticated Open Data API is a simple GET-only reference surface; the
+  FAPI-secured Read/Write services follow the OBIE conventions below.
+authentication:
+  style: oauth2 + oidc + mutual-TLS (FAPI)
+  ref: authentication/tsb-bank-authentication.yml
+idempotency:
+  supported: true
+  header: x-idempotency-key
+  scope: OBIE Payment Initiation (PIS) and file-payment POST operations
+  retention: 24 hours (OBIE standard)
+  note: >-
+    OBIE mandates the x-idempotency-key request header on payment-initiation
+    POST operations so a retried payment consent/order is not duplicated. Applies
+    to the FAPI-secured PIS service, not the unauthenticated Open Data API.
+  ref: obie-read-write-standard
+signing:
+  request_object: true
+  detached_jws: x-jws-signature
+  note: OBIE requires a detached JWS signature (x-jws-signature header) on signed R/W messages.
+pagination:
+  style: cursor
+  response_field: Links (Self, First, Prev, Next, Last) + Meta.TotalPages
+  note: OBIE resources page via Links/Meta envelope.
+request_tracing:
+  header: x-fapi-interaction-id
+  note: FAPI interaction id echoed on request and response for correlation.
+customer_context_headers:
+  - x-fapi-auth-date
+  - x-fapi-customer-ip-address
+  - x-customer-user-agent
+error_envelope:
+  style: OBIE error object (Code, Id, Message, Errors[])
+  ref: errors/tsb-bank-problem-types.yml
+rate_limit_signaling:
+  status: 429 Too Many Requests
+  note: Both Open Data and OTK specs return 429 on throttling.
+versioning:
+  ref: lifecycle/tsb-bank-lifecycle.yml

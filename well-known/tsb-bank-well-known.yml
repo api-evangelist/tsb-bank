@@ -1,0 +1,31 @@
+generated: '2026-07-23'
+method: searched
+hosts:
+- host: https://apis.tsb.co.uk
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: tsb-bank-openid-configuration.json
+    note: OpenID Provider discovery (Curity OAuth Toolkit) — issuer https://apis.tsb.co.uk:8443
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://www.tsb.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: tsb-bank-security.txt
+    note: RFC 9116 — Contact ResponsibleDisclosure@tsb.co.uk (Expires 2025-09-18, stale)
+  - path: /.well-known/openid-configuration
+    status: 404
+- host: https://apis.developer.tsb.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /llms.txt
+    status: 404

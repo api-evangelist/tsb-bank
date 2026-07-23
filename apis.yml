@@ -116,7 +116,72 @@ apis:
     url: https://apis.developer.tsb.co.uk/
   - type: APIReference
     url: https://github.com/OpenBankingUK/read-write-api-specs
+- aid: tsb-bank:tsb-oauth-toolkit-server
+  name: TSB OAuth Toolkit (OTK) Server
+  description: >-
+    TSB's OpenID Connect / OAuth2 authorization server (Curity OAuth Toolkit,
+    OTK Server APIs v4.3.1), backing the FAPI-secured OBIE Read/Write services.
+    Exposes the authorize, token, token-revocation, userinfo, JWKS, session, and
+    OIDC dynamic-client-registration endpoints. The OpenAPI 3.0.2 contract and
+    the OpenID Provider discovery document are publicly served at
+    apis.tsb.co.uk; token issuance and protected operations require client
+    credentials and (for account/payment APIs) mutual-TLS with OBIE/eIDAS
+    certificates.
+  humanURL: https://apis.developer.tsb.co.uk/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - OAuth
+  - OpenID Connect
+  - Identity
+  - FAPI
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-oauth-server-openapi.json
+  - type: Overlay
+    url: overlays/tsb-bank-oauth-server-overlay.yaml
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
 common:
+- type: Overlay
+  url: overlays/tsb-bank-obie-open-data-overlay.yaml
+- type: WellKnown
+  url: well-known/tsb-bank-well-known.yml
+- type: SecurityTxt
+  url: well-known/tsb-bank-security.txt
+- type: Conformance
+  url: conformance/tsb-bank-conformance.yml
+- type: Lifecycle
+  url: lifecycle/tsb-bank-lifecycle.yml
+- type: Conventions
+  url: conventions/tsb-bank-conventions.yml
+- type: Idempotency
+  url: conventions/tsb-bank-conventions.yml
+- type: ErrorCatalog
+  url: errors/tsb-bank-problem-types.yml
+- type: DataModel
+  url: data-model/tsb-bank-data-model.yml
+- type: MCPServer
+  url: mcp/tsb-bank-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/tsb-bank-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/tsb-bank-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Security
+  url: https://www.tsb.co.uk/.well-known/security.txt
+- type: AgenticAccess
+  url: agentic-access/tsb-bank-agentic-access.yml
+- type: OAuthScopes
+  url: scopes/tsb-bank-scopes.yml
+- type: Authentication
+  url: authentication/tsb-bank-authentication.yml
+- type: VulnerabilityDisclosure
+  url: security/tsb-bank-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/tsb-bank-domain-security.yml
 - type: Website
   url: https://www.tsb.co.uk/
 - type: DeveloperPortal

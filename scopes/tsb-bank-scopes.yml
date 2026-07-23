@@ -1,0 +1,67 @@
+generated: '2026-07-23'
+method: searched
+source: openapi/tsb-bank-oauth-server-openapi.json
+docs: https://apis.tsb.co.uk/.well-known/openid-configuration
+notes: >-
+  OIDC/OAuth2 scopes enriched from TSB's live OpenID Provider discovery document
+  (apis.tsb.co.uk/.well-known/openid-configuration) and the OAuth Toolkit (OTK)
+  server OpenAPI. The OBIE Read/Write scopes (accounts, payments,
+  fundsconfirmations) are the standardized OBIE Open Banking scopes TSB's
+  FAPI-secured AIS/PIS/CBPII services require per the OBIE Security Profile; they
+  are not enumerated in the anonymous OTK discovery document and require
+  developer-portal onboarding with OBIE/eIDAS certificates to exercise.
+schemes:
+- name: OAuth2
+  source: openapi/tsb-bank-oauth-server-openapi.json
+  flows:
+  - flow: implicit
+    authorizationUrl: https://apis.tsb.co.uk/auth/oauth/v2/authorize
+    tokenUrl: https://apis.tsb.co.uk/auth/oauth/v2/token
+    registrationUrl: https://apis.tsb.co.uk/openid/connect/register
+scopes:
+- scope: openid
+  description: For access to OpenID Connect endpoints (required for OIDC flows).
+  flows: [implicit, authorizationCode]
+  sources: [openapi/tsb-bank-oauth-server-openapi.json, well-known/tsb-bank-openid-configuration.json]
+- scope: email
+  description: Access to the end-user email claim.
+  flows: [implicit, authorizationCode]
+  sources: [openapi/tsb-bank-oauth-server-openapi.json, well-known/tsb-bank-openid-configuration.json]
+- scope: profile
+  description: Access to the end-user profile claims.
+  flows: [implicit, authorizationCode]
+  sources: [openapi/tsb-bank-oauth-server-openapi.json, well-known/tsb-bank-openid-configuration.json]
+- scope: phone
+  description: Access to the end-user phone claim.
+  flows: [implicit]
+  sources: [openapi/tsb-bank-oauth-server-openapi.json]
+- scope: address
+  description: Access to the end-user address claim.
+  flows: [implicit]
+  sources: [openapi/tsb-bank-oauth-server-openapi.json]
+- scope: openid_client_registration
+  description: Dynamic client registration scope (OIDC/OBIE DCR at /openid/connect/register).
+  flows: [authorizationCode]
+  sources: [well-known/tsb-bank-openid-configuration.json]
+- scope: accounts
+  description: >-
+    OBIE Read/Write Account and Transaction Information (AIS) scope — read access
+    to accounts, balances, transactions, beneficiaries, standing orders, direct
+    debits, scheduled payments, and statements. OBIE standard scope; requires
+    onboarding.
+  flows: [authorizationCode]
+  sources: [obie-security-profile]
+- scope: payments
+  description: >-
+    OBIE Read/Write Payment Initiation (PIS) scope — initiate domestic and
+    scheduled payments, standing orders, and file payments. OBIE standard scope;
+    requires onboarding.
+  flows: [authorizationCode]
+  sources: [obie-security-profile]
+- scope: fundsconfirmations
+  description: >-
+    OBIE Read/Write Confirmation of Funds (CBPII) scope — confirm availability of
+    funds on a customer account for a card-based payment instrument issuer. OBIE
+    standard scope; requires onboarding.
+  flows: [authorizationCode]
+  sources: [obie-security-profile]

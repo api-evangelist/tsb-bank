@@ -1,0 +1,86 @@
+generated: '2026-07-23'
+method: derived
+source: mcp/tsb-bank-mcp.yml + openapi/tsb-bank-oauth-server-openapi.json + openapi/obie-open-data-openapi.json
+notes: >-
+  Binds each candidate MCP tool to its backing OpenAPI operation. The MCP server
+  is a DERIVED candidate (no official hosted server), so every tool inherits its
+  real inputSchema from the referenced operation. The OBIE Open Data spec has no
+  operationIds, so operations are bound by METHOD + PATH.
+surfaces:
+  openapi:
+  - openapi/tsb-bank-oauth-server-openapi.json
+  - openapi/obie-open-data-openapi.json
+  graphql: null
+  mcp:
+    url: null
+    status: candidate
+crosswalk:
+- tool: list_branches
+  category: open-data
+  rest: ['GET /branches']
+  binding: rest
+  confidence: high
+- tool: list_atms
+  category: open-data
+  rest: ['GET /atms']
+  binding: rest
+  confidence: high
+- tool: list_personal_current_accounts
+  category: open-data
+  rest: ['GET /personal-current-accounts']
+  binding: rest
+  confidence: high
+- tool: list_business_current_accounts
+  category: open-data
+  rest: ['GET /business-current-accounts']
+  binding: rest
+  confidence: high
+- tool: list_unsecured_sme_loans
+  category: open-data
+  rest: ['GET /unsecured-sme-loans']
+  binding: rest
+  confidence: high
+- tool: list_commercial_credit_cards
+  category: open-data
+  rest: ['GET /commercial-credit-cards']
+  binding: rest
+  confidence: high
+- tool: get_openid_configuration
+  category: identity
+  rest: [Get_OpenIDDiscovery]
+  binding: rest
+  confidence: high
+- tool: get_jwks
+  category: identity
+  rest: [Get_jwk_set_]
+  binding: rest
+  confidence: high
+- tool: register_client
+  category: identity
+  rest: [Post_oidc_register]
+  binding: rest
+  confidence: high
+  note: Requires openid_client_registration scope.
+mcp_only: []
+rest_only:
+- category: oauth-flow
+  operations:
+  - Get_request_authorization
+  - Get_request_authorize_login
+  - Post_request_authorize_login
+  - Post_request_authorize_consent
+  - Create_request_token
+  - revoke_token
+  - Get_userinfo
+  - Get_client_details_export_
+  - Get_resource_owner_session_status_
+  - Create_resource_owner_logout_
+  - Get_oidc_register_config
+  - Get_request_health_check
+  reason: Interactive browser/OAuth-flow and session endpoints, not agent tool candidates.
+coverage:
+  tools_named: 9
+  tools_bound: 9
+  mcp_only: 0
+  rest_ops_total: 20
+  rest_ops_with_tool: 9

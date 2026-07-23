@@ -1,0 +1,42 @@
+generated: '2026-07-23'
+method: derived
+source: openapi/obie-open-data-openapi.json + openapi/tsb-bank-oauth-server-openapi.json
+notes: >-
+  Entity model derived from TSB's public specs. The Open Data API exposes
+  standalone reference-data collections (no cross-entity references); the OAuth
+  Toolkit exposes identity/session entities. The FAPI-secured Read/Write account
+  and payment resources are not part of the harvested public specs.
+entities:
+- name: Branch
+  source: openapi/obie-open-data-openapi.json#/branches
+  relationships: []
+- name: ATM
+  source: openapi/obie-open-data-openapi.json#/atms
+  relationships: []
+- name: PersonalCurrentAccount
+  source: openapi/obie-open-data-openapi.json#/personal-current-accounts
+  relationships: []
+- name: BusinessCurrentAccount
+  source: openapi/obie-open-data-openapi.json#/business-current-accounts
+  relationships: []
+- name: UnsecuredSMELoan
+  source: openapi/obie-open-data-openapi.json#/unsecured-sme-loans
+  relationships: []
+- name: CommercialCreditCard
+  source: openapi/obie-open-data-openapi.json#/commercial-credit-cards
+  relationships: []
+- name: Client
+  source: openapi/tsb-bank-oauth-server-openapi.json#ClientObject
+  relationships:
+  - type: has_many
+    target: Token
+    via: client_id
+- name: Token
+  source: openapi/tsb-bank-oauth-server-openapi.json#TokenData
+  relationships:
+  - type: belongs_to
+    target: Client
+    via: client_id
+- name: Session
+  source: openapi/tsb-bank-oauth-server-openapi.json#SessionData
+  relationships: []

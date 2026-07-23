@@ -1,0 +1,33 @@
+generated: '2026-07-23'
+method: searched
+source: >-
+  apis.yml description, live OpenID Provider discovery, and OBIE Read/Write
+  standard TSB conforms to as a PSD2 ASPSP
+standards:
+- id: oauth2
+  conforms: true
+  evidence: OTK OpenAPI declares oauth2 securityScheme; discovery exposes authorize/token endpoints
+- id: oidc
+  conforms: true
+  evidence: live /.well-known/openid-configuration with issuer, jwks_uri, userinfo, registration endpoints
+- id: oidc-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint present; openid_client_registration scope supported
+- id: fapi
+  conforms: true
+  evidence: OBIE FAPI security profile — private_key_jwt token auth, request signing, mutual-TLS
+- id: psd2
+  conforms: true
+  evidence: FCA-authorised ASPSP publishing AIS/PIS/CBPII with strong customer authentication
+- id: obie-open-banking
+  conforms: true
+  evidence: Open Data + Read/Write APIs conformant to OBIE standards via apis.developer.tsb.co.uk
+- id: mutual-tls
+  conforms: true
+  evidence: OBIE transport certificates (eIDAS QWAC) required for Read/Write services
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: /.well-known/security.txt published at www.tsb.co.uk
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Open Data and OTK specs use plain error descriptions, not application/problem+json

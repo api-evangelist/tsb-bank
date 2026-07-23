@@ -1,0 +1,23 @@
+# TSB Bank
+
+> TSB Bank plc is a British retail and commercial bank (a subsidiary of Banco Sabadell) and an FCA-authorised PSD2 account servicing payment service provider. It participates in UK Open Banking, publishing OBIE-conformant Open Data reference APIs plus FAPI-secured Account Information (AIS), Payment Initiation (PIS), and Confirmation of Funds (CBPII) services via a public developer portal. Identity is served by a Curity OAuth Toolkit OpenID Provider.
+
+## APIs
+- [TSB Open Data API](https://www.tsb.co.uk/help-and-support/open-banking/): Public, unauthenticated OBIE Open Data — ATMs, branches, personal & business current accounts, unsecured SME loans, commercial credit cards.
+- [TSB OAuth Toolkit (OTK) Server](https://apis.tsb.co.uk/.well-known/openid-configuration): OpenID Connect / OAuth2 authorization server (authorize, token, userinfo, JWKS, dynamic client registration).
+- [TSB Account & Transaction Information API (AIS)](https://apis.developer.tsb.co.uk/): FAPI-secured OBIE Read/Write account, balance, and transaction data (onboarding required).
+- [TSB Payment Initiation API (PIS)](https://apis.developer.tsb.co.uk/): FAPI-secured OBIE Read/Write domestic and scheduled payment initiation (onboarding required).
+- [TSB Confirmation of Funds API (CBPII)](https://apis.developer.tsb.co.uk/): FAPI-secured OBIE Read/Write funds-availability confirmation (onboarding required).
+
+## Specs
+- [OBIE Open Data OpenAPI](https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/openapi/obie-open-data-openapi.json)
+- [OAuth Toolkit Server OpenAPI 3.0.2](https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/openapi/tsb-bank-oauth-server-openapi.json)
+- [OpenID discovery](https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/well-known/tsb-bank-openid-configuration.json)
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/authentication/tsb-bank-authentication.yml)
+- [OAuth scopes](https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/scopes/tsb-bank-scopes.yml)
+
+## Docs
+- [Developer Portal](https://apis.developer.tsb.co.uk/)
+- [Open Banking help](https://www.tsb.co.uk/help-and-support/open-banking/)
+- [OBIE Read/Write API specs](https://github.com/OpenBankingUK/read-write-api-specs)
+- [Security policy (security.txt)](https://www.tsb.co.uk/.well-known/security.txt)
