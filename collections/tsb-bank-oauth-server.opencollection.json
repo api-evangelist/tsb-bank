@@ -1,0 +1,711 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OTK Server APIs",
+    "version": "4.3.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorization Server APIs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get_request_authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/authorize",
+            "headers": [
+              {
+                "name": "mag-identifier",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "This is the 'client_id' of the requesting client. Maximum 255 characters."
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "MUST be one of the listed available values. Any response_type other than 'code' or 'token' is only supported in conjunction with scope=openid. As per the OAuth specification: 'code' is used for authorization code grant type flow, 'token' is used for implicit grant type flow, 'token id_token' is an extension provided by OpenID Connect, and 'code id_token', 'id_token', and 'none' are extensions provided by OpenID Connect Multiple Response Types"
+              },
+              {
+                "name": "response_mode",
+                "value": "",
+                "type": "query",
+                "description": "Specify the method of returning the authorization response. As per the OpenID specification, use of this parameter is NOT RECOMMENDED if you are using the same response mode as the default response mode for the given response type. It MUST be one of the listed values in order to be accepted: 'query', 'fragment', 'form_post'."
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "The 'redirect_uri' that was registered for this client. It is required if multiple redirect_uri's have been registered for this client. If the scope contains openid, this field becomes MANDATORY."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Only SCOPE values that were registered for this client will be granted. If only non-matching SCOPE values are requested, the request will fail."
+              },
+              {
+                "name": "nonce",
+                "value": "",
+                "type": "query",
+                "description": "This is required for response_type 'token id_token'.  Typically, in an OpenID authorization scheme, the nonce represents a cryptographically strong random  string that is used to prevent intercepted responses from being reused."
+              },
+              {
+                "name": "display",
+                "value": "",
+                "type": "query",
+                "description": "This is optional and used within the context of OpenID Connect (ie, response_type 'token id_token'). This parameter is not used here but forwarded to the /authorize/login API. Currently only 'page', 'social_login' (MAG only) and 'local' (MAG only) are supported by default. The value 'social_login' will create a JSON message response instead of an HTML page containing a list of social login providers. The value 'local' will prevent the authorization server from displaying the social login buttons. This is the case if a user selected the local enterprise button for logging in."
+              },
+              {
+                "name": "prompt",
+                "value": "",
+                "type": "query",
+                "description": "This is used within the context of OpenID Connect. Indicates whether the server should prompt for login/consent. It is a space separated list of different values. The server supports the values 'none', 'login' and 'consent'. 'none' is only respected if 'id_token_hint' is not empty. 'consent' is only respected if the current user has an active OAuth session using the same client and the same SCOPE."
+              },
+              {
+                "name": "id_token_hint",
+                "value": "",
+                "type": "query",
+                "description": "This is used within the context of OpenID Connect. Contains a previously issued id_token. This parameter is only respected for 'prompt=none' or 'prompt=none consent'."
+              },
+              {
+                "name": "acr_values",
+                "value": "",
+                "type": "query",
+                "description": "This is used within the context of OpenID Connect. Indicates which acr (additional cryptography) classes are acceptable for the user authentication. It is a space separated list of different values."
+              },
+              {
+                "name": "code_challenge",
+                "value": "",
+                "type": "query",
+                "description": "The code_challenge value in the context of PKCE (RFC 7636)."
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "",
+                "type": "query",
+                "description": "The method that was used to create the code_challenge (plain or S256)."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Value opaque to the server, used by the client to track its session. It will be returned as received."
+              },
+              {
+                "name": "login_hint",
+                "value": "",
+                "type": "query",
+                "description": "A suggested username. This parameter is described in the OpenID Connect core specification."
+              }
+            ]
+          },
+          "docs": "Initializes an OAuth 2.0 flow using a response_type. See RFC 6749 (https://tools.ietf.org/html/rfc6749) for more details."
+        },
+        {
+          "info": {
+            "name": "Get_request_health_check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/health",
+            "params": [
+              {
+                "name": "apikey",
+                "value": "",
+                "type": "query",
+                "description": "Key that needs to be used to perform health check."
+              }
+            ]
+          },
+          "docs": "An endpoint that can be used to verify your OAuth authentication flow is working correctly. Is only usable if the context variable otk.health.apikey is defined inside the corresponding service policy."
+        },
+        {
+          "info": {
+            "name": "Get_request_authorize_login",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/authorize/login",
+            "params": [
+              {
+                "name": "action",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sessionID",
+                "value": "",
+                "type": "query",
+                "description": "The current session which was initiated at the initial authorization request."
+              },
+              {
+                "name": "sessionData",
+                "value": "",
+                "type": "query",
+                "description": "A signed JSON Web Token (JWT) which contains a JSON structure holding values initially received and validated at authorize."
+              }
+            ]
+          },
+          "docs": "Receives a request as the result of a redirect from the /auth/oauth/v2/authorize endpoint. Creates a login page or forwards a request to the consent screen."
+        },
+        {
+          "info": {
+            "name": "Post_request_authorize_login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/authorize/login",
+            "params": [
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Display the login screen, Authenticate the user (login), Cancel the login process or Reset"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The username of the user to authenticate."
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "The password for user authentication."
+              },
+              {
+                "name": "sessionID",
+                "value": "",
+                "type": "query",
+                "description": "The current session which was initiated at the initial authorization request."
+              },
+              {
+                "name": "sessionData",
+                "value": "",
+                "type": "query",
+                "description": "A signed JSON Web Token (JWT) which contains a JSON structure holding values initially received and validated at authorize."
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "An OAuth 2.0 authorization_code issued by a social login provider."
+              },
+              {
+                "name": "provider",
+                "value": "",
+                "type": "query",
+                "description": "The social login provider that issued the 'code'. This value is specified as part of the redirect_uri configured with each social login provider."
+              },
+              {
+                "name": "response_mode",
+                "value": "",
+                "type": "query",
+                "description": "Specify the method of returning the authorization response. As per the OpenID specification, use of this parameter is NOT RECOMMENDED if you are using the same response mode as the default response mode for the given response type. It MUST be one of the listed values in order to be accepted: 'query', 'fragment', 'form_post'."
+              },
+              {
+                "name": "oauth_token",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 1.0 token when the social login provider is used with OAuth 1.0."
+              },
+              {
+                "name": "oauth_verifier",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 1.0 verifier when the social login provider is used with OAuth 1.0."
+              }
+            ]
+          },
+          "docs": "Authenticates a user during the OAuth 2.0 response_type flow OR Authenticates a user during the OAuth 2.0 response_type using a social platform."
+        },
+        {
+          "info": {
+            "name": "Post_request_authorize_consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/authorize/consent",
+            "params": [
+              {
+                "name": "response_mode",
+                "value": "",
+                "type": "query",
+                "description": "Specify the method of returning the authorization response. As per the OpenID specification, use of this parameter is NOT RECOMMENDED if you are using the same response mode as the default response mode for the given response type. It MUST be one of the listed values in order to be accepted: 'query', 'fragment', 'form_post'."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "action",
+                  "value": ""
+                },
+                {
+                  "name": "sessionID",
+                  "value": ""
+                },
+                {
+                  "name": "sessionData",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Handles the 'deny' and 'grant' result of a resource owner's decision at the consent page when 'action' is: 'consent', the API returns an HTML page for the user to grant or deny the request. 'grant', the API handles the 'grant' result of the owner's decision at the consent page. 'deny', the API handles the 'deny' result of the owner's decision at the consent page."
+        },
+        {
+          "info": {
+            "name": "Create_resource_owner_logout_",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.tsb.co.uk:443/connect/session/logout",
+            "headers": [
+              {
+                "name": "mag-identifier",
+                "value": ""
+              },
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "logout_apps",
+                "value": "",
+                "type": "query",
+                "description": "[MAG]: mobile clients MAY use this parameter to invalidate all related oauth token."
+              },
+              {
+                "name": "id_token",
+                "value": "",
+                "type": "query",
+                "description": "The id_token that represents the authenticated user.\r\n[MAG]: Mobile clients may omit this parameter; mag-identifier will be used instead."
+              },
+              {
+                "name": "id_token_type",
+                "value": "",
+                "type": "query",
+                "description": "The id_token_type to be invalidated. Currently ignored."
+              }
+            ]
+          },
+          "docs": "The resource owner deletes his active session on the OAuth server."
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Discovery endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/.well-known/openid-configuration"
+          },
+          "docs": "This endpoint follows the specification defined at http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. It provides a mechanism for an OpenID Connect Relying Party to discover the End-User's OpenID Provider and obtain information needed to interact with it, including its OAuth 2.0 endpoint locations."
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Discovery endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "OPTIONS",
+            "url": "https://apis.tsb.co.uk:443/.well-known/openid-configuration",
+            "headers": [
+              {
+                "name": "Access-Control-Request-Headers",
+                "value": ""
+              },
+              {
+                "name": "Access-Control-Request-Method",
+                "value": ""
+              },
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "CORS preflight request"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Dynamic Registration endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint follows the specification defined at http://openid.net/specs/openid-connect-registration-1_0.html. It enables a client to dynamically register itself as an OAuth 2.0 client."
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Dynamic Registration Configuration endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "OPTIONS",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/register",
+            "headers": [
+              {
+                "name": "Access-Control-Request-Headers",
+                "value": ""
+              },
+              {
+                "name": "Access-Control-Request-Method",
+                "value": ""
+              },
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "CORS preflight request"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Dynamic Registration Configuration endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/register/:client_id",
+            "headers": [
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "client_id that was returned in the client registration response"
+              }
+            ]
+          },
+          "docs": "This endpoint follows the specification defined at http://openid.net/specs/openid-connect-registration-1_0.html. It implements the 'registration_client_uri'."
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Dynamic Registration Configuration endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "OPTIONS",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/register/:client_id",
+            "headers": [
+              {
+                "name": "Access-Control-Request-Headers",
+                "value": ""
+              },
+              {
+                "name": "Access-Control-Request-Method",
+                "value": ""
+              },
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "client_id that was returned in the client registration response"
+              }
+            ]
+          },
+          "docs": "CORS preflight request"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect jwks endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/jwks.json"
+          },
+          "docs": "This endpoint implements the JWKS_URI as specified at http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect jwks endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "OPTIONS",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/jwks.json",
+            "headers": [
+              {
+                "name": "Access-Control-Request-Headers",
+                "value": ""
+              },
+              {
+                "name": "Access-Control-Request-Method",
+                "value": ""
+              },
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "CORS preflight request"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Resource Server APIs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get_userinfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/openid/connect/v1/userinfo",
+            "headers": [
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This API reflects an implementation according to OpenID Connect. This endpoint returns a message with user details. The content depends on the SCOPE associated with the given access_token.\nIMPORTANT: The API will fail if no active id_token is available for the associated user.\nFor more information refer to this website: http://openid.net/specs/openid-connect-core-1_0.html#UserInfo"
+        },
+        {
+          "info": {
+            "name": "Get_resource_owner_session_status_",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/connect/session/status",
+            "headers": [
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id_token",
+                "value": "",
+                "type": "query",
+                "description": "The id_token of the resource owner"
+              },
+              {
+                "name": "id_token_type",
+                "value": "",
+                "type": "query",
+                "description": "The id_token_type to be invalidated. Required if not default type."
+              }
+            ]
+          },
+          "docs": "The client requests the session status by passing in the id_token of the authenticated user.  This informs the client if the resource owner is logged in and has a valid session. The session may be active or not existing."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Token Server APIs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create_request_token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/token",
+            "headers": [
+              {
+                "name": "mag-identifier",
+                "value": ""
+              },
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "The client_id. This can only be used INSTEAD of using the authorization header. Maximum 255 characters."
+              },
+              {
+                "name": "client_secret",
+                "value": "",
+                "type": "query",
+                "description": "The client_secret. This can only be used INSTEAD of using the authorization header."
+              },
+              {
+                "name": "grant_type",
+                "value": "",
+                "type": "query",
+                "description": "For grant_type=password either authorization or client_id AND client_secret, username and password must be provided. For grant_type=client_credentials, either authorization or client_id AND client_secret must be provided. For grant_type=authorization_code: client_id, client_secret, code, and redirect_uri are required. For grant_type=refresh_token: client_id and refresh_token are required. For grant_type=jwt or saml2-bearer: client_id and assertion are required"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "Required if grant_type is authorization_code"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "Required if grant_type is authorization_code.  Must contain a valid auth code"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Only SCOPE values that were registered for this client will be granted. If only non-matching SCOPE values are requested, the request will fail."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "If grant_type is password or client_credentials, this parameter must contain a valid username "
+              },
+              {
+                "name": "password",
+                "value": "",
+                "type": "query",
+                "description": "If grant_type is password or client_credentials, this parameter must contain a valid password"
+              },
+              {
+                "name": "assertion",
+                "value": "",
+                "type": "query",
+                "description": "If grant_type is saml2-bearer or jwt, this parameter must contain a base64 encoded SAML or JWT token that represents an authenticated resource owner."
+              },
+              {
+                "name": "refresh_token",
+                "value": "",
+                "type": "query",
+                "description": "If grant_type is refresh_token, this parameter must contain a valid refresh_token."
+              },
+              {
+                "name": "code_verifier",
+                "value": "",
+                "type": "query",
+                "description": "A random value of 43-256 characters. See https://tools.ietf.org/html/rfc7636#section-4 for details.  This parameter is required only when a code_challenge is provided with the authorization request for this session."
+              }
+            ]
+          },
+          "docs": "Request access_token or refresh_token using OAuth 2.0 grant_type: password authorization_code refresh_token client_credentials urn:ietf:params:oauth:grant-type:jwt-bearer urn:ietf:params:oauth:grant-type:saml2-bearer. See RFC 6749 for more details."
+        },
+        {
+          "info": {
+            "name": "revoke_token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/token/revoke",
+            "headers": [
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "This parameter can be used with 'client_secret' instead of the authorization header. Maximum 255 characters."
+              },
+              {
+                "name": "client_secret",
+                "value": "",
+                "type": "query",
+                "description": "This parameter is required when 'client_id' is used. Optional for public clients."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "The token as it was issued."
+              },
+              {
+                "name": "token_type_hint",
+                "value": "",
+                "type": "query",
+                "description": "Valid values are 'access_token' and 'refresh_token'."
+              }
+            ]
+          },
+          "docs": "Revoke an access_token or refresh_token. See RFC 7009 for more details. Section 2.3 of that RFC is not supported."
+        },
+        {
+          "info": {
+            "name": "Get_client_details_export_",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.tsb.co.uk:443/auth/oauth/v2/client/export",
+            "headers": [
+              {
+                "name": "authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "The client_id for which details are requested."
+              }
+            ]
+          },
+          "docs": "The endpoint returns details about a registered OAuth client.  This endpoint is disabled by default. If requests fail due to an unknown endpoint, contact the system administrator."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -2,11 +2,9 @@ generated: '2026-07-23'
 method: derived
 status: candidate
 source: openapi/tsb-bank-oauth-server-openapi.json + openapi/obie-open-data-openapi.json
-notes: >-
-  No official hosted TSB MCP server was found. This is a DERIVED candidate tool
-  list mapping the publicly documented operations of TSB's Open Data API and
-  OAuth Toolkit server. The FAPI-secured OBIE Read/Write operations are omitted
-  because they require certificate-based onboarding and are not anonymously
+notes: No official hosted TSB MCP server was found. This is a DERIVED candidate tool list mapping the
+  publicly documented operations of TSB's Open Data API and OAuth Toolkit server. The FAPI-secured OBIE
+  Read/Write operations are omitted because they require certificate-based onboarding and are not anonymously
   invocable.
 server:
   name: tsb-bank
@@ -40,3 +38,9 @@ tools:
 - name: register_client
   description: Dynamically register an OIDC client (requires openid_client_registration).
   source_operation: openapi/tsb-bank-oauth-server-openapi.json#Post_oidc_register
+deployment:
+  mode: none
+  verified: derived
+  tools: 9
+  checked: '2026-08-12'
+  source: catalog MCP census
