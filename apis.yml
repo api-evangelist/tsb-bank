@@ -46,38 +46,13 @@ created: '2026-07-23'
 modified: '2026-07-23'
 specificationVersion: '0.23'
 apis:
-- aid: tsb-bank:tsb-open-data-api
-  name: TSB Open Data API
-  description: >-
-    TSB's public, unauthenticated Open Data API conformant to the OBIE Open Data
-    API Standard, exposing reference data for ATMs, branches, personal current
-    accounts, business current accounts, unsecured SME loans, and commercial
-    credit cards. No live TSB Open Data endpoint was confirmed at review time;
-    the harvested OpenAPI is the shared OBIE Open Data standard, not a TSB
-    proprietary contract.
-  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
-  baseURL: https://apis.tsb.co.uk
-  tags:
-  - Open Data
-  - ATMs
-  - Branches
-  - Reference Data
-  properties:
-  - type: OpenAPI
-    url: openapi/obie-open-data-openapi.json
-  - type: Documentation
-    url: https://www.tsb.co.uk/help-and-support/open-banking/
-  - type: APIReference
-    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
 - aid: tsb-bank:tsb-account-transaction-information-api
   name: TSB Account and Transaction Information API (AIS)
   description: >-
-    TSB's OBIE Read/Write Account and Transaction Information (AIS) API,
-    providing authorised third-party providers read access to account, balance,
-    transaction, beneficiary, standing order, direct debit, and statement data.
-    FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer
-    authentication; access requires developer-portal onboarding with OBIE/eIDAS
-    certificates.
+    TSB's OBIE Read/Write Account and Transaction Information (AIS) API, providing authorised third-party
+    providers read access to account, balance, transaction, beneficiary, standing order, direct debit,
+    and statement data. FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication;
+    access requires developer-portal onboarding with OBIE/eIDAS certificates.
   humanURL: https://apis.developer.tsb.co.uk/
   baseURL: https://apis.tsb.co.uk
   tags:
@@ -92,11 +67,10 @@ apis:
 - aid: tsb-bank:tsb-payment-initiation-api
   name: TSB Payment Initiation API (PIS)
   description: >-
-    TSB's OBIE Read/Write Payment Initiation (PIS) API, enabling authorised
-    third-party providers to initiate domestic and scheduled payments and
-    standing orders on behalf of consenting customers. FAPI-secured with
-    OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication; access
-    requires developer-portal onboarding with OBIE/eIDAS certificates.
+    TSB's OBIE Read/Write Payment Initiation (PIS) API, enabling authorised third-party providers to initiate
+    domestic and scheduled payments and standing orders on behalf of consenting customers. FAPI-secured
+    with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication; access requires developer-portal
+    onboarding with OBIE/eIDAS certificates.
   humanURL: https://apis.developer.tsb.co.uk/
   baseURL: https://apis.tsb.co.uk
   tags:
@@ -111,11 +85,10 @@ apis:
 - aid: tsb-bank:tsb-confirmation-of-funds-api
   name: TSB Confirmation of Funds API (CBPII)
   description: >-
-    TSB's OBIE Read/Write Confirmation of Funds (CBPII) API, allowing authorised
-    card-based payment instrument issuers to confirm whether funds are available
-    on a customer account. FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2
-    strong customer authentication; access requires developer-portal onboarding
-    with OBIE/eIDAS certificates.
+    TSB's OBIE Read/Write Confirmation of Funds (CBPII) API, allowing authorised card-based payment instrument
+    issuers to confirm whether funds are available on a customer account. FAPI-secured with OAuth2/OIDC,
+    mutual-TLS, and PSD2 strong customer authentication; access requires developer-portal onboarding with
+    OBIE/eIDAS certificates.
   humanURL: https://apis.developer.tsb.co.uk/
   baseURL: https://apis.tsb.co.uk
   tags:
@@ -127,39 +100,172 @@ apis:
     url: https://apis.developer.tsb.co.uk/
   - type: APIReference
     url: https://github.com/OpenBankingUK/read-write-api-specs
-- aid: tsb-bank:tsb-oauth-toolkit-server
-  name: TSB OAuth Toolkit (OTK) Server
-  description: >-
-    TSB's OpenID Connect / OAuth2 authorization server (Curity OAuth Toolkit,
-    OTK Server APIs v4.3.1), backing the FAPI-secured OBIE Read/Write services.
-    Exposes the authorize, token, token-revocation, userinfo, JWKS, session, and
-    OIDC dynamic-client-registration endpoints. The OpenAPI 3.0.2 contract and
-    the OpenID Provider discovery document are publicly served at
-    apis.tsb.co.uk; token issuance and protected operations require client
-    credentials and (for account/payment APIs) mutual-TLS with OBIE/eIDAS
-    certificates.
-  humanURL: https://apis.developer.tsb.co.uk/
+- aid: tsb-bank:tsb-bank-atm-api
+  name: TSB Bank ATM API
+  description: Endpoint for getting ATM data
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
   baseURL: https://apis.tsb.co.uk
   tags:
-  - Authentication
-  - OpenID Connect
-  - Identity
-  - FAPI
-  tags_raw:
-  - OAuth
-  - OpenID Connect
-  - Identity
-  - FAPI
+  - ATM
   properties:
   - type: OpenAPI
-    url: openapi/tsb-bank-oauth-server-openapi.json
-  - type: Overlay
-    url: overlays/tsb-bank-oauth-server-overlay.yaml
+    url: openapi/tsb-bank-atm-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-authorization-server-apis-api
+  name: TSB Bank Authorization Server APIs API
+  description: >-
+    The Authorization Server APIs API from TSB Bank — 9 operation(s) for authorization server apis.
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Authorization Server APIs
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-authorization-server-apis-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-bca-api
+  name: TSB Bank BCA API
+  description: Endpoint for getting Business Current Account data
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - BCA
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-bca-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-branch-api
+  name: TSB Bank Branch API
+  description: Endpoint for getting Branch data
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Branch
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-branch-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-ccc-api
+  name: TSB Bank CCC API
+  description: Endpoint for getting Commercial Credit Card data
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - CCC
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-ccc-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-pca-api
+  name: TSB Bank PCA API
+  description: Endpoint for getting Personal Current Account data
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - PCA
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-pca-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-resource-server-apis-api
+  name: TSB Bank Resource Server APIs API
+  description: The Resource Server APIs API from TSB Bank — 2 operation(s) for resource server apis.
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Resource Server APIs
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-resource-server-apis-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-sme-api
+  name: TSB Bank SME API
+  description: Endpoint for getting Unsecured SME Loan data
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - SME
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-sme-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
+  - type: Documentation
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+  - type: OpenIDConnect
+    url: https://apis.tsb.co.uk/.well-known/openid-configuration
+- aid: tsb-bank:tsb-bank-token-server-apis-api
+  name: TSB Bank Token Server APIs API
+  description: The Token Server APIs API from TSB Bank — 3 operation(s) for token server apis.
+  humanURL: https://www.tsb.co.uk/help-and-support/open-banking/
+  baseURL: https://apis.tsb.co.uk
+  tags:
+  - Token Server APIs
+  properties:
+  - type: OpenAPI
+    url: openapi/tsb-bank-token-server-apis-api-openapi.yml
+  - type: Documentation
+    url: https://www.tsb.co.uk/help-and-support/open-banking/
+  - type: APIReference
+    url: https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/
   - type: Documentation
     url: https://apis.tsb.co.uk/.well-known/openid-configuration
   - type: OpenIDConnect
     url: https://apis.tsb.co.uk/.well-known/openid-configuration
 common:
+- type: Overlay
+  url: overlays/tsb-bank-oauth-server-overlay.yaml
 - type: Overlay
   url: overlays/tsb-bank-obie-open-data-overlay.yaml
 - type: WellKnown
