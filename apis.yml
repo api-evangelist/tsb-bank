@@ -276,6 +276,9 @@ apis:
   - type: OpenIDConnect
     url: https://apis.tsb.co.uk/.well-known/openid-configuration
 common:
+- type: CapabilityMap
+  url: capabilities/tsb-bank-capability-edges.yml
+  name: TSB Bank Business Capability Map
 - type: Overlay
   url: overlays/tsb-bank-oauth-server-overlay.yaml
 - type: Overlay
