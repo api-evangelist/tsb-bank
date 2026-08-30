@@ -1,0 +1,333 @@
+openapi: 3.2.0
+info:
+  title: OTK Server Resource Server APIs API
+  version: 4.3.1
+  description: All API's available in OAuth Toolkit server
+servers:
+- url: https://apis.tsb.co.uk:443/
+  variables:
+    request.url.host:
+      default: unknown
+    request.url.port:
+      default: unknown
+tags:
+- name: Resource Server APIs
+paths:
+  /openid/connect/v1/userinfo:
+    get:
+      tags:
+      - Resource Server APIs
+      description: 'This API reflects an implementation according to OpenID Connect. This endpoint returns a message with user details. The content depends on the SCOPE associated with the given access_token.
+
+        IMPORTANT: The API will fail if no active id_token is available for the associated user.
+
+        For more information refer to this website: http://openid.net/specs/openid-connect-core-1_0.html#UserInfo'
+      operationId: Get_userinfo
+      parameters:
+      - name: authorization
+        in: header
+        required: true
+        description: 'A valid access_token (e.g.: authorization: Bearer access-token-value). The access_token must have the ''openid'' scope. Other valid scope values are ''email'', ''address'', ''phone'', and ''profile''. In addition to those scope values, ''user_role'' is supported. The ''user_role'' scope is an extension for OTK/MAG and returns the role of the user.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A JSON message containing details about the user. The content depends on the scope associated with the access_token.
+          content:
+            application/json:
+              schema:
+                properties:
+                  sub:
+                    type: string
+                    example: '248289761001'
+                  name:
+                    type: string
+                    example: Jane Doe
+                  given_name:
+                    type: string
+                    example: Jane
+                  family_name:
+                    type: string
+                    example: Doe
+                  preferred_username:
+                    type: string
+                    example: j.doe
+                  email:
+                    type: string
+                    example: janedoe@example.com
+                  picture:
+                    type: string
+                    example: http://example.com/janedoe/me.jpg
+        '400':
+          description: A CORS request failed.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 134'
+              schema:
+                type: string
+                default: '134'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: The request did not match CORS requirements
+        '401':
+          description: The given token is not valid. The error code may be 990, 991, 992, 993.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 990'
+              schema:
+                type: string
+                default: '990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: Validation error
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 203'
+              schema:
+                type: string
+                default: '203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: invalid_request
+                  error_description:
+                    type: string
+                    example: SSL is required
+        '405':
+          description: HTTP method is not valid. The Allow header is required by [RFC 2616](https://tools.ietf.org/html/rfc2616).
+          headers:
+            Allow:
+              description: Comma-separated list of allowed HTTP methods.
+              schema:
+                type: string
+                default: POST,GET
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error. This also occurs if the user does not have an active session, id_token, on the server.
+          headers:
+            x-ca-err:
+              description: 'Custom error header. Possible value: 000'
+              schema:
+                type: string
+                default: '000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /connect/session/status:
+    get:
+      tags:
+      - Resource Server APIs
+      description: The client requests the session status by passing in the id_token of the authenticated user.  This informs the client if the resource owner is logged in and has a valid session. The session may be active or not existing.
+      operationId: Get_resource_owner_session_status_
+      parameters:
+      - name: authorization
+        in: header
+        required: true
+        description: 'A valid access_token (e.g.: authorization: Bearer access-token-value)'
+        schema:
+          type: string
+      - name: id_token
+        in: query
+        required: true
+        description: The id_token of the resource owner
+        schema:
+          type: string
+      - name: id_token_type
+        in: query
+        required: false
+        description: The id_token_type to be invalidated. Required if not default type.
+        schema:
+          type: string
+          default: urn:ietf:params:oauth:grant-type:jwt-bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session:
+                    type: string
+                    description: Session is active
+                    example: active
+                  session_status:
+                    type: string
+                    description: Session does not exist
+                    example: none
+        '204':
+          description: No Content, applicable to OPTIONS request with preflight configuration
+          headers:
+            Access-Control-Allow-Methods:
+              description: Allowable Methods, POST or GET
+              schema:
+                type: string
+                default: GET
+        '400':
+          description: Bad Request
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values: 3007103 (missing or duplicate parameters), 3007134 (request did not match CORS requirements)'
+              schema:
+                type: string
+                default: '3007103'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: The given token is not valid. The error code may be 1003990, 1003991, 1003992, 1003993
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values: 3007990 (validation error), '
+              schema:
+                type: string
+                default: '3007990'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values:  3007203 (SSL required)'
+              schema:
+                type: string
+                default: '3007203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error.
+          headers:
+            x-ca-err:
+              description: Custom error extension
+              schema:
+                type: string
+                default: '3002203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://apis.tsb.co.uk/auth/oauth/v2/authorize
+          scopes:
+            openid: For access to OpenId endpoints
+            email: Example data access
+            profile: Example data access
+            phone: Example data access
+            address: Example data access

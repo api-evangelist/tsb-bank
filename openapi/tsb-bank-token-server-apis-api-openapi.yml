@@ -1,0 +1,710 @@
+openapi: 3.2.0
+info:
+  title: OTK Server Token Server APIs API
+  version: 4.3.1
+  description: All API's available in OAuth Toolkit server
+servers:
+- url: https://apis.tsb.co.uk:443/
+  variables:
+    request.url.host:
+      default: unknown
+    request.url.port:
+      default: unknown
+tags:
+- name: Token Server APIs
+paths:
+  /auth/oauth/v2/token:
+    post:
+      tags:
+      - Token Server APIs
+      description: 'Request access_token or refresh_token using OAuth 2.0 grant_type: password authorization_code refresh_token client_credentials urn:ietf:params:oauth:grant-type:jwt-bearer urn:ietf:params:oauth:grant-type:saml2-bearer. See RFC 6749 for more details.'
+      operationId: Create_request_token
+      parameters:
+      - name: mag-identifier
+        in: header
+        required: false
+        x-is-map: false
+        description: '[MAG]
+
+          [MAG]: mobile clients MUST use this header. It must represent a valid registered device. This grant_type, however, is not supported by MAG'
+        schema:
+          type: string
+      - name: authorization
+        in: header
+        required: false
+        x-is-map: false
+        description: 'The HTTP basic authorization header containing the client credentials as base64 encoded string (authorization: Basic base64(client_id:client_secret)). This can only be used INSTEAD of the parameters ''client_id'', ''client_secret''.'
+        schema:
+          type: string
+      - name: client_id
+        in: query
+        required: false
+        x-is-map: false
+        description: The client_id. This can only be used INSTEAD of using the authorization header. Maximum 255 characters.
+        schema:
+          type: string
+      - name: client_secret
+        in: query
+        required: false
+        x-is-map: false
+        description: The client_secret. This can only be used INSTEAD of using the authorization header.
+        schema:
+          type: string
+      - name: grant_type
+        in: query
+        required: true
+        x-is-map: false
+        description: 'For grant_type=password either authorization or client_id AND client_secret, username and password must be provided. For grant_type=client_credentials, either authorization or client_id AND client_secret must be provided. For grant_type=authorization_code: client_id, client_secret, code, and redirect_uri are required. For grant_type=refresh_token: client_id and refresh_token are required. For grant_type=jwt or saml2-bearer: client_id and assertion are required'
+        schema:
+          type: string
+          enum:
+          - password
+          - refresh_token
+          - authorization_code
+          - client_credentials
+          - urn:ietf:params:oauth:grant-type:jwt-bearer
+          - urn:ietf:params:oauth:grant-type:saml2-bearer
+          default: password
+      - name: code
+        in: query
+        required: false
+        x-is-map: false
+        description: Required if grant_type is authorization_code
+        schema:
+          type: string
+      - name: redirect_uri
+        in: query
+        required: false
+        x-is-map: false
+        description: Required if grant_type is authorization_code.  Must contain a valid auth code
+        schema:
+          type: string
+      - name: scope
+        in: query
+        required: false
+        x-is-map: false
+        description: Only SCOPE values that were registered for this client will be granted. If only non-matching SCOPE values are requested, the request will fail.
+        schema:
+          type: string
+      - name: username
+        in: query
+        required: false
+        x-is-map: false
+        description: 'If grant_type is password or client_credentials, this parameter must contain a valid username '
+        schema:
+          type: string
+      - name: password
+        in: query
+        required: false
+        x-is-map: false
+        description: If grant_type is password or client_credentials, this parameter must contain a valid password
+        schema:
+          type: string
+          format: password
+      - name: assertion
+        in: query
+        required: false
+        x-is-map: false
+        description: If grant_type is saml2-bearer or jwt, this parameter must contain a base64 encoded SAML or JWT token that represents an authenticated resource owner.
+        schema:
+          type: string
+      - name: refresh_token
+        in: query
+        required: false
+        x-is-map: false
+        description: If grant_type is refresh_token, this parameter must contain a valid refresh_token.
+        schema:
+          type: string
+      - name: code_verifier
+        in: query
+        required: false
+        x-is-map: false
+        description: A random value of 43-256 characters. See https://tools.ietf.org/html/rfc7636#section-4 for details.  This parameter is required only when a code_challenge is provided with the authorization request for this session.
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/authToken200'
+        '204':
+          description: No Content, applicable to OPTIONS request with preflight configuration
+          headers:
+            Access-Control-Allow-Methods:
+              description: Allowable Methods, POST
+              schema:
+                type: string
+                default: POST
+        '400':
+          description: Bad Request, see x-ca-err for possible error codes
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values: 3003103 (missing or duplicate parameters), 3003107 (invalid mag-identifier), 3003113 (invalid grant), 3003115 (no registered scope value for client), 3003119 (grant type not supported), 3003134 (request did not match CORS requirements), 3003135 (token limit reached), 3003201 (client credentials not valid),'
+              schema:
+                type: string
+                default: '3003107'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: The client could not be authenticated.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values: 3003201 (Invalid or Missing credentials), 3003202 (Resource owner could not be authenticated)'
+              schema:
+                type: string
+                default: '3003202'
+            WWW-Authenticate:
+              description: This header is required by RFC 7235 if an authentication scheme has been used. It contains the used authentication scheme and an error message.
+              schema:
+                type: string
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values:  3003203 (SSL is required)'
+              schema:
+                type: string
+                default: '3003203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values:  3003000 (Request failed due to unknown reason)'
+              schema:
+                type: string
+                default: '3003000'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /auth/oauth/v2/token/revoke:
+    post:
+      tags:
+      - Token Server APIs
+      description: Revoke an access_token or refresh_token. See RFC 7009 for more details. Section 2.3 of that RFC is not supported.
+      operationId: revoke_token
+      parameters:
+      - name: authorization
+        in: header
+        required: false
+        x-is-map: false
+        description: 'The HTTP basic authorization header containing the client credentials as base64 encoded string (authorization: Basic base64(client_id:client_secret)). For public clients the ''client_id'' parameter can be used. This header is required if no client parameters are used.'
+        schema:
+          type: string
+      - name: client_id
+        in: query
+        required: false
+        x-is-map: false
+        description: This parameter can be used with 'client_secret' instead of the authorization header. Maximum 255 characters.
+        schema:
+          type: string
+      - name: client_secret
+        in: query
+        required: false
+        x-is-map: false
+        description: This parameter is required when 'client_id' is used. Optional for public clients.
+        schema:
+          type: string
+      - name: token
+        in: query
+        required: true
+        x-is-map: false
+        description: The token as it was issued.
+        schema:
+          type: string
+      - name: token_type_hint
+        in: query
+        required: true
+        x-is-map: false
+        description: Valid values are 'access_token' and 'refresh_token'.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: revoked
+        '204':
+          description: No Content, applicable to OPTIONS request with preflight configuration
+          headers:
+            Access-Control-Allow-Methods:
+              description: Allowable Methods, POST, DELETE
+              schema:
+                type: string
+                default: POST
+        '400':
+          description: Bad request
+          headers:
+            x-ca-err:
+              description: 'Custom error extension, possible values:  3004103 (Missing or duplicate parameters), 3004117 (Client lacks authorization for request), 3003134 (request did not match CORS requirements)'
+              schema:
+                type: string
+                default: '3004103'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: The client could not be authenticated.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values: 3004201 (Invalid or missing credentials)'
+              schema:
+                type: string
+                default: '3004103'
+            WWW-Authenticate:
+              description: This header is required by RFC 7235 if an authentication scheme has been used. It contains the used authentication scheme and an error message.
+              schema:
+                type: string
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values:  3004203 (SSL is required)'
+              schema:
+                type: string
+                default: '3004203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '503':
+          description: unsupported token type
+          headers:
+            x-ca-err:
+              description: Custom error extension
+              schema:
+                type: string
+                default: '3002203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+  /auth/oauth/v2/client/export:
+    get:
+      tags:
+      - Token Server APIs
+      description: The endpoint returns details about a registered OAuth client.  This endpoint is disabled by default. If requests fail due to an unknown endpoint, contact the system administrator.
+      operationId: Get_client_details_export_
+      parameters:
+      - name: authorization
+        in: header
+        required: true
+        description: 'The HTTP basic authorization header containing resource_owner credentials as base64 encoded string (authorization: Basic base64(username:password)). Depending on the server configuration this header may not be required.'
+        schema:
+          type: string
+      - name: client_id
+        in: query
+        required: true
+        x-is-map: false
+        description: The client_id for which details are requested.
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/export200'
+        '204':
+          description: No Content, applicable to OPTIONS request with preflight configuration
+          headers:
+            Access-Control-Allow-Methods:
+              description: Allowable Methods, POST, GET
+              schema:
+                type: string
+                default: POST
+        '400':
+          description: Bad Request
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values: 3005103 (missing or invalid parameters), 3005132 (invalid server configuration), 3005134 (request does not match CORS requirements),  '
+              schema:
+                type: string
+                default: '3005103'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '401':
+          description: The client is invalid | The resource owner could not be authenticated
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values: 3005201 (client is unknown or invalid), 3005202 (resource owner could not be authenticated)'
+              schema:
+                type: string
+                default: '3005201'
+            WWW-Authenticate:
+              description: This header is required by RFC 7235 if an authentication scheme has been used. It contains the used authentication scheme and an error message.
+              schema:
+                type: string
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '403':
+          description: Forbidden.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension. Possible values: 3005203 (SSL required)'
+              schema:
+                type: string
+                default: '3005203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '405':
+          description: The HTTP method is not valid
+          headers:
+            Allow:
+              description: This header is required by RFC 2616 and contains a comma separated list of valid HTTP methods.
+              schema:
+                type: string
+                default: GET | POST
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+        '500':
+          description: Unknown error.
+          headers:
+            x-ca-err:
+              description: 'Custom error extension.  Possible values: 3005000 (unknown error)'
+              schema:
+                type: string
+                default: '3002203'
+            Pragma:
+              description: Pragma browser directive
+              schema:
+                type: string
+                default: no-cache
+            Cache-Control:
+              description: Cache-Control browser directive
+              schema:
+                type: string
+                default: no-store
+components:
+  schemas:
+    OAuthProtectedEndpointsObject:
+      type: object
+      properties:
+        userinfo_endpoint_path:
+          type: string
+          description: UserInfo endpoint
+          example: /openid/connect/v1/userinfo
+        usersession_status_endpoint_path:
+          type: string
+          description: User Session status endpoint
+          example: /connect/session/status
+      title: OAuthProtectedEndpointsObject
+    ExportData:
+      type: object
+      properties:
+        server:
+          $ref: '#/components/schemas/ServerObject'
+        oauth:
+          $ref: '#/components/schemas/OAuthObject'
+        custom:
+          $ref: '#/components/schemas/CustomObject'
+      title: ExportData
+    SystemEndpointsObject:
+      type: object
+      properties:
+        authorization_endpoint_path:
+          type: string
+          description: Authorization endpoint
+          example: /auth/oauth/v2/authorize
+        token_endpoint_path:
+          type: string
+          description: Token endpoint
+          example: /auth/oauth/v2/token
+        token_revocation_endpoint_path:
+          type: string
+          description: Token revocation endpoint
+          example: /auth/oauth/v2/token/revoke
+        usersession_logout_endpoint_path:
+          type: string
+          description: User logout endpoint
+          example: /connect/session/logout
+      title: SystemEndpointsObject
+    CustomObject:
+      type: object
+      properties:
+        mag_demo_products_endpoint_path:
+          type: string
+          description: MAG API demo endpoint
+          example: /protected/resource/products
+        oauth_demo_protected_api_endpoint_path:
+          type: string
+          description: OAuth API demo endpoint
+          example: /oauth/v2/protectedapi/foo
+      title: CustomObject
+    ServerObject:
+      type: object
+      properties:
+        hostname:
+          type: string
+          description: The hostname of the server
+        port:
+          type: string
+          description: The port of the server
+        prefix:
+          type: string
+          description: URL prefix
+          example: /urlprefix
+        server_certs:
+          type: string
+          description: The server certificate(s)
+      title: ServerObject
+    ClientObject:
+      type: object
+      properties:
+        organization:
+          type: string
+          description: A session ID, matching the sessionID
+        description:
+          type: string
+          description: expiry
+        client_name:
+          type: string
+          description: current_username
+        client_type:
+          type: string
+          description: current_user_consent
+        registered_by:
+          type: string
+          description: current_user_role
+        client_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientIdObject'
+      title: ClientObject
+    OAuthObject:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/ClientObject'
+        system_endpoints:
+          $ref: '#/components/schemas/SystemEndpointsObject'
+        oauth_protected_endpoints:
+          $ref: '#/components/schemas/OAuthProtectedEndpointsObject'
+      title: OAuthObject
+    TokenData:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The Access Token for the given token request
+        token_type:
+          type: string
+          description: The Token Type issued
+          example: Bearer
+        expires_in:
+          type: string
+          description: The expiry time, in seconds
+          example: '3600'
+        refresh_token:
+          type: string
+          description: The refresh token, if applicable
+        scope:
+          type: string
+          description: The issued scope
+          example: oob
+        id_token:
+          type: string
+          description: If the requested SCOPE included 'msso' or 'openid', response includes an id_token
+        id_token_type:
+          type: string
+          description: If the requested SCOPE included 'msso' or 'openid', response includes an id_token_type
+      title: TokenData
+    ClientIdObject:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: A client id
+          example: 84695 ... b39770c3d
+        client_secret:
+          type: string
+          description: A client secret
+          example: abcde ... ldjjakkC
+        scope:
+          type: string
+          description: The scopes available for the client
+          example: openid email profile
+        redirect_uri:
+          type: string
+          description: The registered redirect_uri for the client
+          example: https://example.com/client/consent?state=23n23n...13k1j4
+        environment:
+          type: string
+          description: ''
+          example: ALL
+        status:
+          type: string
+          description: ''
+          example: ENABLED
+        registered_by:
+          type: string
+          description: The id of the entity that registered the client
+      title: ClientIdObject
+  responses:
+    authToken200:
+      description: A success response that includes the issued token, expire and other details from the OAuth Server
+      headers:
+        Pragma:
+          description: Pragma browser directive
+          schema:
+            type: string
+            default: no-cache
+        Cache-Control:
+          description: Cache-Control browser directive
+          schema:
+            type: string
+            default: no-store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenData'
+    export200:
+      description: A JSON message including details about a client in order to configure it. The client_secret may or may not be included depending on the OAuth server configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExportData'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://apis.tsb.co.uk/auth/oauth/v2/authorize
+          scopes:
+            openid: For access to OpenId endpoints
+            email: Example data access
+            profile: Example data access
+            phone: Example data access
+            address: Example data access
