@@ -101,6 +101,10 @@ apis:
   baseURL: https://apis.tsb.co.uk
   tags:
   - Payment Initiation
+  - PI
+  - Payments
+  tags_raw:
+  - Payment Initiation
   - PIS
   - Payments
   properties:
