@@ -1,0 +1,41 @@
+{
+  "provider": "tsb-bank",
+  "sources": [
+    "_original/obie-open-data-openapi.json",
+    "_original/tsb-bank-oauth-server-openapi.json"
+  ],
+  "outputs": [
+    "tsb-bank-atm-api-openapi.yml",
+    "tsb-bank-bca-api-openapi.yml",
+    "tsb-bank-branch-api-openapi.yml",
+    "tsb-bank-ccc-api-openapi.yml",
+    "tsb-bank-pca-api-openapi.yml",
+    "tsb-bank-sme-api-openapi.yml",
+    "tsb-bank-authorization-server-apis-api-openapi.yml",
+    "tsb-bank-resource-server-apis-api-openapi.yml",
+    "tsb-bank-token-server-apis-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "obie-open-data-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "tsb-bank-oauth-server-openapi.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "tsb-bank-oauth-server-openapi.json: declared missing tag: Authorization Server APIs",
+    "tsb-bank-oauth-server-openapi.json: declared missing tag: Resource Server APIs",
+    "tsb-bank-oauth-server-openapi.json: declared missing tag: Token Server APIs",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "tsb-bank-atm-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-authorization-server-apis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-bca-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-branch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-ccc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-pca-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-resource-server-apis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-sme-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tsb-bank-token-server-apis-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

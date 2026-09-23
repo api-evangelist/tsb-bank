@@ -178,11 +178,13 @@ paths:
               schema:
                 type: string
                 default: no-store
+      summary: Get userinfo
+      x-summary-source: derived
   /connect/session/status:
     get:
       tags:
       - Resource Server APIs
-      description: The client requests the session status by passing in the id_token of the authenticated user.  This informs the client if the resource owner is logged in and has a valid session. The session may be active or not existing.
+      description: The client requests the session status by passing in the id_token of the authenticated user. This informs the client if the resource owner is logged in and has a valid session. The session may be active or not existing.
       operationId: Get_resource_owner_session_status_
       parameters:
       - name: authorization
@@ -318,6 +320,8 @@ paths:
               schema:
                 type: string
                 default: no-store
+      summary: Get resource owner session status
+      x-summary-source: derived
 components:
   securitySchemes:
     OAuth2:

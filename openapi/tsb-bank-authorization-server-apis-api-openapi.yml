@@ -245,6 +245,8 @@ paths:
               schema:
                 type: string
                 default: no-store
+      summary: Get request authorization
+      x-summary-source: derived
   /auth/oauth/health:
     get:
       tags:
@@ -266,6 +268,8 @@ paths:
           description: Responds with "error". This can be due to missing or incorrect API key. Check audit log messages for more information.
         '503':
           description: Responds with "error". Returned on health check failure. This can be returned due to bad database configuration, bad certification configuration, etc. Check the audit log messages for more information.
+      summary: Get request health check
+      x-summary-source: derived
   /auth/oauth/v2/authorize/login:
     get:
       tags:
@@ -370,6 +374,8 @@ paths:
               schema:
                 type: string
                 default: no-store
+      summary: Get request authorize login
+      x-summary-source: derived
     post:
       tags:
       - Authorization Server APIs
@@ -583,6 +589,8 @@ paths:
               schema:
                 type: string
                 default: no-store
+      summary: Post request authorize login
+      x-summary-source: derived
   /auth/oauth/v2/authorize/consent:
     post:
       tags:
@@ -749,6 +757,8 @@ paths:
               - action
               - sessionID
               - sessionData
+      summary: Post request authorize consent
+      x-summary-source: derived
   /connect/session/logout:
     post:
       tags:
@@ -903,6 +913,8 @@ paths:
               schema:
                 type: string
                 default: no-store
+      summary: Create resource owner logout
+      x-summary-source: derived
   /.well-known/openid-configuration:
     options:
       tags:
@@ -1783,40 +1795,16 @@ components:
           type: string
           description: Requested Scope
       title: RequestParametersObject
-    SessionObject:
+    RequestConsentObject:
       type: object
       properties:
-        sessionID:
+        client_name:
           type: string
-          description: A session ID, matching the sessionID
-        exp:
+          description: Client Name
+        scope_verified:
           type: string
-          description: expiry
-        current_username:
-          type: string
-          description: current_username
-        current_user_consent:
-          type: string
-          description: current_user_consent
-        current_user_role:
-          type: string
-          description: current_user_role
-        current_user_acr:
-          type: string
-          description: current_user_acr
-        current_user_authTime:
-          type: string
-          description: current_user_authTime
-        salt:
-          type: string
-          description: salt
-        third_party_sso_token:
-          type: string
-          description: third_party_sso_token
-        third_party_sso_token_type:
-          type: string
-          description: third_party_sso_token_type
-      title: SessionObject
+          description: Valid scope for this client
+      title: RequestConsentObject
     OpenIDDiscovery:
       required:
       - authorization_endpoint
@@ -1945,16 +1933,40 @@ components:
           - en-GB
           description: Languages and scripts supported for the user interface
       description: 'The OpenID configuration document as defined by the specification: http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata'
-    RequestConsentObject:
+    SessionObject:
       type: object
       properties:
-        client_name:
+        sessionID:
           type: string
-          description: Client Name
-        scope_verified:
+          description: A session ID, matching the sessionID
+        exp:
           type: string
-          description: Valid scope for this client
-      title: RequestConsentObject
+          description: expiry
+        current_username:
+          type: string
+          description: current_username
+        current_user_consent:
+          type: string
+          description: current_user_consent
+        current_user_role:
+          type: string
+          description: current_user_role
+        current_user_acr:
+          type: string
+          description: current_user_acr
+        current_user_authTime:
+          type: string
+          description: current_user_authTime
+        salt:
+          type: string
+          description: salt
+        third_party_sso_token:
+          type: string
+          description: third_party_sso_token
+        third_party_sso_token_type:
+          type: string
+          description: third_party_sso_token_type
+      title: SessionObject
   responses:
     auth302:
       description: 'Will contain either: A success response including the redirect location header to the server that handles the authentication.  The redirect parameter ''sessionData''s structure looks like the model schema shown OR ''invalid mag-identifier'' OR ''invalid scope'' OR ''unsupported response type'' OR ''unauthorized client''. The non-successful conditions may include redirect query params as follows: ''error'', string with default value:  invalid_request ''error_description'', string with description of error ''state'', string with no default value.  It is opaque to the server and returned as received. ''x-ca-err'', string with default 3000108'
