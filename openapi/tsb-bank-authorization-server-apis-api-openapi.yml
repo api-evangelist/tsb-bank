@@ -1778,31 +1778,6 @@ components:
           schema:
             $ref: '#/components/schemas/SessionData'
   schemas:
-    RequestParametersObject:
-      type: object
-      properties:
-        display:
-          type: string
-          description: Display Value
-        prompt:
-          type: string
-          description: Prompt Value
-        id_token_hint:
-          type: string
-          description: Id Token For Authenticated User
-        acr_values:
-          type: string
-          description: A List of ACR Values
-        client_id:
-          type: string
-          description: A Client ID
-        nonce:
-          type: string
-          description: A nonce
-        scope:
-          type: string
-          description: Requested Scope
-      title: RequestParametersObject
     SessionObject:
       type: object
       properties:
@@ -1837,6 +1812,55 @@ components:
           type: string
           description: third_party_sso_token_type
       title: SessionObject
+    RequestConsentObject:
+      type: object
+      properties:
+        client_name:
+          type: string
+          description: Client Name
+        scope_verified:
+          type: string
+          description: Valid scope for this client
+      title: RequestConsentObject
+    SessionData:
+      required:
+      - session
+      - request_consent
+      - request_parameters
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionObject'
+        request_consent:
+          $ref: '#/components/schemas/RequestConsentObject'
+        request_parameters:
+          $ref: '#/components/schemas/RequestParametersObject'
+      title: ServiceProviderConfigurationData
+    RequestParametersObject:
+      type: object
+      properties:
+        display:
+          type: string
+          description: Display Value
+        prompt:
+          type: string
+          description: Prompt Value
+        id_token_hint:
+          type: string
+          description: Id Token For Authenticated User
+        acr_values:
+          type: string
+          description: A List of ACR Values
+        client_id:
+          type: string
+          description: A Client ID
+        nonce:
+          type: string
+          description: A nonce
+        scope:
+          type: string
+          description: Requested Scope
+      title: RequestParametersObject
     OpenIDDiscovery:
       required:
       - authorization_endpoint
@@ -1965,30 +1989,6 @@ components:
           - en-GB
           description: Languages and scripts supported for the user interface
       description: 'The OpenID configuration document as defined by the specification: http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata'
-    RequestConsentObject:
-      type: object
-      properties:
-        client_name:
-          type: string
-          description: Client Name
-        scope_verified:
-          type: string
-          description: Valid scope for this client
-      title: RequestConsentObject
-    SessionData:
-      required:
-      - session
-      - request_consent
-      - request_parameters
-      type: object
-      properties:
-        session:
-          $ref: '#/components/schemas/SessionObject'
-        request_consent:
-          $ref: '#/components/schemas/RequestConsentObject'
-        request_parameters:
-          $ref: '#/components/schemas/RequestParametersObject'
-      title: ServiceProviderConfigurationData
   securitySchemes:
     OAuth2:
       type: oauth2

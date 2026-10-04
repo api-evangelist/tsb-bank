@@ -514,81 +514,27 @@ paths:
       summary: Get client details export
       x-summary-source: derived
 components:
-  responses:
-    export200:
-      description: A JSON message including details about a client in order to configure it. The client_secret may or may not be included depending on the OAuth server configuration.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ExportData'
-    authToken200:
-      description: A success response that includes the issued token, expire and other details from the OAuth Server
-      headers:
-        Pragma:
-          description: Pragma browser directive
-          schema:
-            type: string
-            default: no-cache
-        Cache-Control:
-          description: Cache-Control browser directive
-          schema:
-            type: string
-            default: no-store
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TokenData'
   schemas:
-    OAuthObject:
+    SystemEndpointsObject:
       type: object
       properties:
-        client:
-          $ref: '#/components/schemas/ClientObject'
-        system_endpoints:
-          $ref: '#/components/schemas/SystemEndpointsObject'
-        oauth_protected_endpoints:
-          $ref: '#/components/schemas/OAuthProtectedEndpointsObject'
-      title: OAuthObject
-    ClientObject:
-      type: object
-      properties:
-        organization:
+        authorization_endpoint_path:
           type: string
-          description: A session ID, matching the sessionID
-        description:
+          description: Authorization endpoint
+          example: /auth/oauth/v2/authorize
+        token_endpoint_path:
           type: string
-          description: expiry
-        client_name:
+          description: Token endpoint
+          example: /auth/oauth/v2/token
+        token_revocation_endpoint_path:
           type: string
-          description: current_username
-        client_type:
+          description: Token revocation endpoint
+          example: /auth/oauth/v2/token/revoke
+        usersession_logout_endpoint_path:
           type: string
-          description: current_user_consent
-        registered_by:
-          type: string
-          description: current_user_role
-        client_ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClientIdObject'
-      title: ClientObject
-    ServerObject:
-      type: object
-      properties:
-        hostname:
-          type: string
-          description: The hostname of the server
-        port:
-          type: string
-          description: The port of the server
-        prefix:
-          type: string
-          description: URL prefix
-          example: /urlprefix
-        server_certs:
-          type: string
-          description: The server certificate(s)
-      title: ServerObject
+          description: User logout endpoint
+          example: /connect/session/logout
+      title: SystemEndpointsObject
     OAuthProtectedEndpointsObject:
       type: object
       properties:
@@ -601,16 +547,6 @@ components:
           description: User Session status endpoint
           example: /connect/session/status
       title: OAuthProtectedEndpointsObject
-    ExportData:
-      type: object
-      properties:
-        server:
-          $ref: '#/components/schemas/ServerObject'
-        oauth:
-          $ref: '#/components/schemas/OAuthObject'
-        custom:
-          $ref: '#/components/schemas/CustomObject'
-      title: ExportData
     TokenData:
       type: object
       properties:
@@ -639,6 +575,78 @@ components:
           type: string
           description: If the requested SCOPE included 'msso' or 'openid', response includes an id_token_type
       title: TokenData
+    ServerObject:
+      type: object
+      properties:
+        hostname:
+          type: string
+          description: The hostname of the server
+        port:
+          type: string
+          description: The port of the server
+        prefix:
+          type: string
+          description: URL prefix
+          example: /urlprefix
+        server_certs:
+          type: string
+          description: The server certificate(s)
+      title: ServerObject
+    ClientObject:
+      type: object
+      properties:
+        organization:
+          type: string
+          description: A session ID, matching the sessionID
+        description:
+          type: string
+          description: expiry
+        client_name:
+          type: string
+          description: current_username
+        client_type:
+          type: string
+          description: current_user_consent
+        registered_by:
+          type: string
+          description: current_user_role
+        client_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientIdObject'
+      title: ClientObject
+    ExportData:
+      type: object
+      properties:
+        server:
+          $ref: '#/components/schemas/ServerObject'
+        oauth:
+          $ref: '#/components/schemas/OAuthObject'
+        custom:
+          $ref: '#/components/schemas/CustomObject'
+      title: ExportData
+    OAuthObject:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/ClientObject'
+        system_endpoints:
+          $ref: '#/components/schemas/SystemEndpointsObject'
+        oauth_protected_endpoints:
+          $ref: '#/components/schemas/OAuthProtectedEndpointsObject'
+      title: OAuthObject
+    CustomObject:
+      type: object
+      properties:
+        mag_demo_products_endpoint_path:
+          type: string
+          description: MAG API demo endpoint
+          example: /protected/resource/products
+        oauth_demo_protected_api_endpoint_path:
+          type: string
+          description: OAuth API demo endpoint
+          example: /oauth/v2/protectedapi/foo
+      title: CustomObject
     ClientIdObject:
       type: object
       properties:
@@ -670,38 +678,30 @@ components:
           type: string
           description: The id of the entity that registered the client
       title: ClientIdObject
-    SystemEndpointsObject:
-      type: object
-      properties:
-        authorization_endpoint_path:
-          type: string
-          description: Authorization endpoint
-          example: /auth/oauth/v2/authorize
-        token_endpoint_path:
-          type: string
-          description: Token endpoint
-          example: /auth/oauth/v2/token
-        token_revocation_endpoint_path:
-          type: string
-          description: Token revocation endpoint
-          example: /auth/oauth/v2/token/revoke
-        usersession_logout_endpoint_path:
-          type: string
-          description: User logout endpoint
-          example: /connect/session/logout
-      title: SystemEndpointsObject
-    CustomObject:
-      type: object
-      properties:
-        mag_demo_products_endpoint_path:
-          type: string
-          description: MAG API demo endpoint
-          example: /protected/resource/products
-        oauth_demo_protected_api_endpoint_path:
-          type: string
-          description: OAuth API demo endpoint
-          example: /oauth/v2/protectedapi/foo
-      title: CustomObject
+  responses:
+    authToken200:
+      description: A success response that includes the issued token, expire and other details from the OAuth Server
+      headers:
+        Pragma:
+          description: Pragma browser directive
+          schema:
+            type: string
+            default: no-cache
+        Cache-Control:
+          description: Cache-Control browser directive
+          schema:
+            type: string
+            default: no-store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenData'
+    export200:
+      description: A JSON message including details about a client in order to configure it. The client_secret may or may not be included depending on the OAuth server configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExportData'
   securitySchemes:
     OAuth2:
       type: oauth2
