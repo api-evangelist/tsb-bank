@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/tsb-bank/integrations
 - https://n8n.io/integrations/tsb-bank/
@@ -9,8 +9,26 @@ checked:
 - https://composio.dev/toolkits/tsb-bank
 - https://monid.ai/tools/tsb-bank
 - https://n8n.io/integrations/tsb-bank/
+- https://www.openbanking.org.uk/regulated-providers/tsb-bank/
 - https://zapier.com/apps/tsb-bank/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: UK Open Banking
+  partner: null
+  type: contract
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.openbanking.org.uk/regulated-providers/tsb-bank/
+  contract_reference:
+    register: UK Open Banking regulated providers (OBL directory)
+    spec_file: null
+    role: Account Providers
+    registered_name: TSB Bank Plc
+    register_id: https://register.fca.org.uk/s/firm?id=001b000000MfI5JAAV
+    matched_domain: tsb.co.uk
+    api_families: null
+    detected_by: sweep-standard-registers.py
+    detected: '2026-10-12'
 templates: []
