@@ -515,38 +515,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SystemEndpointsObject:
+    ExportData:
       type: object
       properties:
-        authorization_endpoint_path:
-          type: string
-          description: Authorization endpoint
-          example: /auth/oauth/v2/authorize
-        token_endpoint_path:
-          type: string
-          description: Token endpoint
-          example: /auth/oauth/v2/token
-        token_revocation_endpoint_path:
-          type: string
-          description: Token revocation endpoint
-          example: /auth/oauth/v2/token/revoke
-        usersession_logout_endpoint_path:
-          type: string
-          description: User logout endpoint
-          example: /connect/session/logout
-      title: SystemEndpointsObject
-    OAuthProtectedEndpointsObject:
-      type: object
-      properties:
-        userinfo_endpoint_path:
-          type: string
-          description: UserInfo endpoint
-          example: /openid/connect/v1/userinfo
-        usersession_status_endpoint_path:
-          type: string
-          description: User Session status endpoint
-          example: /connect/session/status
-      title: OAuthProtectedEndpointsObject
+        server:
+          $ref: '#/components/schemas/ServerObject'
+        oauth:
+          $ref: '#/components/schemas/OAuthObject'
+        custom:
+          $ref: '#/components/schemas/CustomObject'
+      title: ExportData
     TokenData:
       type: object
       properties:
@@ -575,23 +553,26 @@ components:
           type: string
           description: If the requested SCOPE included 'msso' or 'openid', response includes an id_token_type
       title: TokenData
-    ServerObject:
+    SystemEndpointsObject:
       type: object
       properties:
-        hostname:
+        authorization_endpoint_path:
           type: string
-          description: The hostname of the server
-        port:
+          description: Authorization endpoint
+          example: /auth/oauth/v2/authorize
+        token_endpoint_path:
           type: string
-          description: The port of the server
-        prefix:
+          description: Token endpoint
+          example: /auth/oauth/v2/token
+        token_revocation_endpoint_path:
           type: string
-          description: URL prefix
-          example: /urlprefix
-        server_certs:
+          description: Token revocation endpoint
+          example: /auth/oauth/v2/token/revoke
+        usersession_logout_endpoint_path:
           type: string
-          description: The server certificate(s)
-      title: ServerObject
+          description: User logout endpoint
+          example: /connect/session/logout
+      title: SystemEndpointsObject
     ClientObject:
       type: object
       properties:
@@ -615,38 +596,23 @@ components:
           items:
             $ref: '#/components/schemas/ClientIdObject'
       title: ClientObject
-    ExportData:
+    ServerObject:
       type: object
       properties:
-        server:
-          $ref: '#/components/schemas/ServerObject'
-        oauth:
-          $ref: '#/components/schemas/OAuthObject'
-        custom:
-          $ref: '#/components/schemas/CustomObject'
-      title: ExportData
-    OAuthObject:
-      type: object
-      properties:
-        client:
-          $ref: '#/components/schemas/ClientObject'
-        system_endpoints:
-          $ref: '#/components/schemas/SystemEndpointsObject'
-        oauth_protected_endpoints:
-          $ref: '#/components/schemas/OAuthProtectedEndpointsObject'
-      title: OAuthObject
-    CustomObject:
-      type: object
-      properties:
-        mag_demo_products_endpoint_path:
+        hostname:
           type: string
-          description: MAG API demo endpoint
-          example: /protected/resource/products
-        oauth_demo_protected_api_endpoint_path:
+          description: The hostname of the server
+        port:
           type: string
-          description: OAuth API demo endpoint
-          example: /oauth/v2/protectedapi/foo
-      title: CustomObject
+          description: The port of the server
+        prefix:
+          type: string
+          description: URL prefix
+          example: /urlprefix
+        server_certs:
+          type: string
+          description: The server certificate(s)
+      title: ServerObject
     ClientIdObject:
       type: object
       properties:
@@ -678,7 +644,47 @@ components:
           type: string
           description: The id of the entity that registered the client
       title: ClientIdObject
+    CustomObject:
+      type: object
+      properties:
+        mag_demo_products_endpoint_path:
+          type: string
+          description: MAG API demo endpoint
+          example: /protected/resource/products
+        oauth_demo_protected_api_endpoint_path:
+          type: string
+          description: OAuth API demo endpoint
+          example: /oauth/v2/protectedapi/foo
+      title: CustomObject
+    OAuthObject:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/ClientObject'
+        system_endpoints:
+          $ref: '#/components/schemas/SystemEndpointsObject'
+        oauth_protected_endpoints:
+          $ref: '#/components/schemas/OAuthProtectedEndpointsObject'
+      title: OAuthObject
+    OAuthProtectedEndpointsObject:
+      type: object
+      properties:
+        userinfo_endpoint_path:
+          type: string
+          description: UserInfo endpoint
+          example: /openid/connect/v1/userinfo
+        usersession_status_endpoint_path:
+          type: string
+          description: User Session status endpoint
+          example: /connect/session/status
+      title: OAuthProtectedEndpointsObject
   responses:
+    export200:
+      description: A JSON message including details about a client in order to configure it. The client_secret may or may not be included depending on the OAuth server configuration.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExportData'
     authToken200:
       description: A success response that includes the issued token, expire and other details from the OAuth Server
       headers:
@@ -696,12 +702,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TokenData'
-    export200:
-      description: A JSON message including details about a client in order to configure it. The client_secret may or may not be included depending on the OAuth server configuration.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ExportData'
   securitySchemes:
     OAuth2:
       type: oauth2
