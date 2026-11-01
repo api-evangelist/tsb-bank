@@ -1,4 +1,4 @@
-# TSB Bank (tsb-bank)
+# TSB Bank
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,115 +64,133 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-TSB Bank plc is a British retail and commercial bank headquartered in Edinburgh, offering current accounts, savings, mortgages, personal loans, credit cards, and insurance to personal and business customers across the United Kingdom. Spun out of Lloyds Banking Group in 2013, TSB is a wholly owned subsidiary of the Spanish banking group Banco Sabadell. As an FCA-authorised account servicing payment service provider (ASPSP) under PSD2, TSB participates in UK Open Banking and publishes OBIE-conformant APIs through a public developer portal at apis.developer.tsb.co.uk. TSB is not one of the CMA9 banks but implements the same OBIE Open Data and Read/Write API family.
+TSB Bank plc is a British retail and commercial bank headquartered in Edinburgh, offering current accounts, savings, mortgages, personal loans, credit cards, and insurance to personal and business customers across the United Kingdom. Spun out of Lloyds Banking Group in 2013 and listed before being acquired in 2015, TSB is a wholly owned subsidiary of the Spanish banking group Banco Sabadell. It is authorised by the Prudential Regulation Authority and regulated by the Financial Conduct Authority and the PRA. As an FCA-authorised account servicing payment service provider (ASPSP) under PSD2, TSB participates in UK Open Banking and publishes its APIs conformant to the Open Banking Implementation Entity (OBIE) standards through a public developer portal at apis.developer.tsb.co.uk. TSB is not one of the nine CMA-mandated banks (CMA9) but implements the same OBIE Open Data and Read/Write API family: unauthenticated Open Data reference APIs plus FAPI-secured Account and Transaction Information (AIS), Payment Initiation (PIS), and Confirmation of Funds (CBPII) services secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/tsb-bank/refs/heads/main/apis.yml)
+**Areas:** Financial Services · Banking · Open Banking · PSD2 · OBIE · United Kingdom · Payments · Account Information · FAPI · Fintech
 
-## Tags
+## TSB Bank on APIs.io
 
-- Financial Services
-- Banking
-- Open Banking
-- PSD2
-- OBIE
-- United Kingdom
-- Payments
-- Account Information
-- FAPI
-- Fintech
+Everything profiled for TSB Bank is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/tsb-bank/](https://apis.io/providers/tsb-bank/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (12)
 
-- **Created:** 2026-07-23
-- **Modified:** 2026-07-23
+- [TSB Account and Transaction Information API (AIS)](https://apis.io/apis/tsb-bank/tsb-account-transaction-information-api/) — TSB's OBIE Read/Write Account and Transaction Information (AIS) API, providing authorised third-party providers read access to account, balance,…
+- [TSB Payment Initiation API (PIS)](https://apis.io/apis/tsb-bank/tsb-payment-initiation-api/) — TSB's OBIE Read/Write Payment Initiation (PIS) API, enabling authorised third-party providers to initiate domestic and scheduled payments and standing…
+- [TSB Confirmation of Funds API (CBPII)](https://apis.io/apis/tsb-bank/tsb-confirmation-of-funds-api/) — TSB's OBIE Read/Write Confirmation of Funds (CBPII) API, allowing authorised card-based payment instrument issuers to confirm whether funds are available on…
+- [TSB Bank ATM API](https://apis.io/apis/tsb-bank/tsb-bank-atm-api/) — Endpoint for getting ATM data
+- [TSB Bank Authorization Server APIs API](https://apis.io/apis/tsb-bank/tsb-bank-authorization-server-apis-api/) — The Authorization Server APIs API from TSB Bank — 9 operation(s) for authorization server apis.
+- [TSB Bank BCA API](https://apis.io/apis/tsb-bank/tsb-bank-bca-api/) — Endpoint for getting Business Current Account data
+- [TSB Bank Branch API](https://apis.io/apis/tsb-bank/tsb-bank-branch-api/) — Endpoint for getting Branch data
+- [TSB Bank CCC API](https://apis.io/apis/tsb-bank/tsb-bank-ccc-api/) — Endpoint for getting Commercial Credit Card data
+- [TSB Bank PCA API](https://apis.io/apis/tsb-bank/tsb-bank-pca-api/) — Endpoint for getting Personal Current Account data
+- [TSB Bank Resource Server APIs API](https://apis.io/apis/tsb-bank/tsb-bank-resource-server-apis-api/) — The Resource Server APIs API from TSB Bank — 2 operation(s) for resource server apis.
+- [TSB Bank SME API](https://apis.io/apis/tsb-bank/tsb-bank-sme-api/) — Endpoint for getting Unsecured SME Loan data
+- [TSB Bank Token Server APIs API](https://apis.io/apis/tsb-bank/tsb-bank-token-server-apis-api/) — The Token Server APIs API from TSB Bank — 3 operation(s) for token server apis.
 
-## APIs
+### Published properties
 
-### TSB Open Data API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-TSB's public, unauthenticated Open Data API conformant to the OBIE Open Data API Standard, exposing reference data for ATMs, branches, personal current accounts, business current accounts, unsecured SME loans, and commercial credit cards. No live TSB Open Data endpoint was confirmed at review time; the harvested OpenAPI is the shared OBIE Open Data standard, not a TSB proprietary contract.
+#### MCP servers (1)
 
-- **Human URL:** [https://www.tsb.co.uk/help-and-support/open-banking/](https://www.tsb.co.uk/help-and-support/open-banking/)
-- **Base URL:** `https://apis.tsb.co.uk`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [tsb-bank](https://apis.io/servers/tsb-bank/tsb-bank/)
 
-- Open Data
-- ATMs
-- Branches
-- Reference Data
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [OpenAPI](openapi/obie-open-data-openapi.json) — shared OBIE Open Data standard (Swagger 2.0, v1.3)
-- [Documentation](https://www.tsb.co.uk/help-and-support/open-banking/)
-- [API Reference](https://openbankinguk.github.io/opendata-api-docs-pub/v2.4.0/)
+- [Tsb Bank Agentic Access](https://apis.io/agentic-access/tsb-bank/tsb-bank-agentic-access/)
 
-### TSB Account and Transaction Information API (AIS)
+#### Collections (2)
 
-TSB's OBIE Read/Write Account and Transaction Information (AIS) API, providing authorised third-party providers read access to account, balance, transaction, beneficiary, standing order, direct debit, and statement data. FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication; access requires developer-portal onboarding with OBIE/eIDAS certificates.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://apis.developer.tsb.co.uk/](https://apis.developer.tsb.co.uk/)
-- **Base URL:** `https://apis.tsb.co.uk`
+- [Open Data API](https://apis.io/collections/tsb-bank/open-obie-open-data/)
+- [OTK Server APIs](https://apis.io/collections/tsb-bank/open-tsb-bank-oauth-server/)
 
-#### Tags
+#### Overlays (2)
 
-- Account Information
-- AIS
-- Open Banking
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Properties
+- [Tsb Bank Oauth Server Overlay](https://apis.io/overlays/tsb-bank/tsb-bank-oauth-server-overlay/)
+- [Tsb Bank Obie Open Data Overlay](https://apis.io/overlays/tsb-bank/tsb-bank-obie-open-data-overlay/)
 
-- [Documentation](https://apis.developer.tsb.co.uk/)
-- [API Reference](https://github.com/OpenBankingUK/read-write-api-specs)
+#### Security (3)
 
-### TSB Payment Initiation API (PIS)
+Authentication, trust centre, and vulnerability disclosure.
 
-TSB's OBIE Read/Write Payment Initiation (PIS) API, enabling authorised third-party providers to initiate domestic and scheduled payments and standing orders on behalf of consenting customers. FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication; access requires developer-portal onboarding with OBIE/eIDAS certificates.
+- [Tsb Bank Authentication](https://apis.io/security/tsb-bank/tsb-bank-authentication/)
+- [Tsb Bank Domain Security](https://apis.io/security/tsb-bank/tsb-bank-domain-security/)
+- [Tsb Bank Vulnerability Disclosure](https://apis.io/security/tsb-bank/tsb-bank-vulnerability-disclosure/)
 
-- **Human URL:** [https://apis.developer.tsb.co.uk/](https://apis.developer.tsb.co.uk/)
-- **Base URL:** `https://apis.tsb.co.uk`
+#### OAuth scopes (1)
 
-#### Tags
+The permissions the API asks for.
 
-- Payment Initiation
-- PIS
-- Payments
+- [Tsb Bank Scopes](https://apis.io/scopes/tsb-bank/tsb-bank-scopes/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://apis.developer.tsb.co.uk/)
-- [API Reference](https://github.com/OpenBankingUK/read-write-api-specs)
-
-### TSB Confirmation of Funds API (CBPII)
-
-TSB's OBIE Read/Write Confirmation of Funds (CBPII) API, allowing authorised card-based payment instrument issuers to confirm whether funds are available on a customer account. FAPI-secured with OAuth2/OIDC, mutual-TLS, and PSD2 strong customer authentication; access requires developer-portal onboarding with OBIE/eIDAS certificates.
-
-- **Human URL:** [https://apis.developer.tsb.co.uk/](https://apis.developer.tsb.co.uk/)
-- **Base URL:** `https://apis.tsb.co.uk`
-
-#### Tags
-
-- Confirmation of Funds
-- CBPII
-- Open Banking
-
-#### Properties
-
-- [Documentation](https://apis.developer.tsb.co.uk/)
-- [API Reference](https://github.com/OpenBankingUK/read-write-api-specs)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.tsb.co.uk/)
-- [Developer Portal](https://apis.developer.tsb.co.uk/)
 - [Documentation](https://www.tsb.co.uk/help-and-support/open-banking/)
-- [LinkedIn](https://www.linkedin.com/company/tsb-bank)
-- [Terms of Service](https://www.tsb.co.uk/legal/)
-- [Privacy Policy](https://www.tsb.co.uk/privacy/)
 - [Support](https://www.tsb.co.uk/help-and-support/)
+- [Security](https://www.tsb.co.uk/.well-known/security.txt)
+- [Terms of service](https://www.tsb.co.uk/legal/)
+- [Privacy policy](https://www.tsb.co.uk/privacy/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 36.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 39.2 |
+| Contract governance | 18.2 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 44.6 |
+| Access clarity | 21.1 |
+
+**Agent readiness 37.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+
+**Regulatory alignment 48.8** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/tsb-bank/](https://apis.io/providers/tsb-bank/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for TSB Bank: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/tsb-bank/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
